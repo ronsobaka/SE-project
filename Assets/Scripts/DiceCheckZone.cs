@@ -4,18 +4,36 @@ using UnityEngine;
 
 public class DiceCheckZone : MonoBehaviour
 {
-Vector3 diceVelocity;
-public static int diceLandedNumber = 0;
+	public GameObject counter;
+	Vector3 diceVelocity;
+	public static int diceLandedNumber = 0;
+	public static float delay = 1f;
+	private Rigidbody counterRB;
+	public float moveSpeed = 3f;
+	private Vector3 moveDistance = new Vector3(-4,0,0);
+	private Vector3 endPosition;
+	private int moves = 0;
+	
+	void Start() {
+		counterRB = counter.GetComponent<Rigidbody>();
+		endPosition = counterRB.transform.position + moveDistance;
+	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		diceVelocity = DicePhysics.diceVelocity;
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			endPosition += moveDistance;
+			moves++;
+		}
+		Debug.Log(endPosition);
 	}
+
 
 	void OnTriggerStay(Collider col)
 	{
-		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
-		{
+		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f) {
 			switch (col.gameObject.name) {
 			case "Side1":
 				diceLandedNumber = 6;
@@ -36,7 +54,18 @@ public static int diceLandedNumber = 0;
 				diceLandedNumber = 1;
 				break;
 			}
+			
+			
+			moveCounter();
+
+		}
+	}
+	void moveCounter() {
+		
+		if (counterRB.transform.position != endPosition) {
+			counterRB.transform.position = Vector3.MoveTowards(counterRB.transform.position, endPosition, moveSpeed * Time.deltaTime);
 		}
 	}
 }
+
 

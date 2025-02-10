@@ -10,6 +10,7 @@ public class DicePhysics : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
+		rb.useGravity = false;
 	}
 	
 	// Update is called once per frame
@@ -17,13 +18,15 @@ public class DicePhysics : MonoBehaviour {
 		diceVelocity = rb.velocity;
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
+			rb.useGravity = true;
 			float dirX = Random.Range (0, 100);
 			float dirY = Random.Range (0, 100);
 			float dirZ = Random.Range (0, 100);
-			transform.rotation = Quaternion.identity;
 			rb.AddForce (transform.up * 200);
             rb.AddForce (transform.forward * 100);
 			rb.AddTorque (dirX, dirY, dirZ);
 		}
+
+		
 	}
 }
