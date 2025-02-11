@@ -10,7 +10,7 @@ public class DiceCheckZone : MonoBehaviour
 	public static float delay = 1f;
 	private Rigidbody counterRB;
 	public float moveSpeed = 3f;
-	private Vector3 moveDistance = new Vector3(-4,0,0);
+	private Vector3 moveDistance;
 	private Vector3 endPosition;
 	private int moves = 0;
 	
@@ -24,8 +24,16 @@ public class DiceCheckZone : MonoBehaviour
 		diceVelocity = DicePhysics.diceVelocity;
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			endPosition += moveDistance;
-			moves++;
+			for(int i = 0; i < diceLandedNumber; i++) {
+				UpdatedMoveDistance();
+				endPosition += moveDistance;
+				moves++;
+				
+				if (moves > 40) {
+					moves = 1;
+					endPosition = counterRB.transform.position;
+				}
+			}
 		}
 		Debug.Log(endPosition);
 	}
@@ -58,6 +66,15 @@ public class DiceCheckZone : MonoBehaviour
 			
 			moveCounter();
 
+		}
+	}
+
+
+	void UpdatedMoveDistance() {
+		if ( moves == 1 ) {
+			moveDistance = new Vector3(-4.3f,0,0);
+		}else {
+			moveDistance = new Vector3(-3.1f,0,0);
 		}
 	}
 	void moveCounter() {
