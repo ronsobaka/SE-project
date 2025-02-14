@@ -7,7 +7,7 @@ public class DiceCheckZone : MonoBehaviour
 	public GameObject counter;
 	Vector3 diceVelocity;
 	public static int diceLandedNumber = 0;
-	public static float delay = 1f;
+	public static float delay = 0.5f;
 	private Rigidbody counterRB;
 	public float moveSpeed = 3f;
 	private Vector3 moveDistance;
@@ -61,29 +61,56 @@ public class DiceCheckZone : MonoBehaviour
 				break;
 			
 			}
-			for(int i = 0; i < diceLandedNumber; i++) {
-				UpdatedMoveDistance();
-				endPosition += moveDistance;
-				moves++;
-				
-				if ((moves % 10) == 0){
-					counterRB.transform.Rotate(Vector3.up * 90);
-				}
-				if (moves > 40) {
-					moves = 0;
-					endPosition = counterRB.transform.position;
-				}
-			}
+			StartCoroutine(MoveCounterCoroutine(diceLandedNumber));
 			triggerActive = false;
 		}
 	}
 
+	IEnumerator MoveCounterCoroutine(int movesToMake) {
+    	for (int i = 0; i < movesToMake; i++) {
+        	UpdatedMoveDistance();
+            endPosition += moveDistance;
+            moves++;
+
+            // Rotate the counter every 10 moves
+            if ((moves % 10) == 0) {
+                counterRB.transform.Rotate(Vector3.up * 90);
+            }
+
+            // Move the counter to the new position
+            while (counterRB.transform.position != endPosition) {
+                moveCounter();
+                yield return null; // Wait for the next frame
+            }
+
+            // Wait for a specified delay before the next move
+            yield return new WaitForSeconds(delay);
+
+			if (moves == 40) {
+			moves = 0;
+			endPosition = counterRB.transform.position;
+		}
+		}
+		Debug.Log(moves);
+    }
 
 	void UpdatedMoveDistance() {
-		if ( moves == 1 ) {
+		if ( moves == 0 ) {
 			moveDistance = new Vector3(-4.3f,0,0);
-		}else {
+		}else if (moves >= 2 && moves <= 9) {
 			moveDistance = new Vector3(-3.1f,0,0);
+		}else if (moves == 10) {
+			moveDistance = new Vector3 (0,0,4.3f);
+		}else if (moves >= 11 && moves <= 19) {
+			moveDistance = new Vector3(0,0,3.1f);
+		}else if ( moves == 20) {
+			moveDistance = new Vector3 (4.3f,0,0);
+		}else if (moves >= 21 && moves <= 29) {
+			moveDistance = new Vector3(3.1f,0,0);
+		}else if ( moves == 30) {
+			moveDistance = new Vector3 (0,0,-4.3f);
+		}else if (moves >= 31 && moves <= 39) {
+			moveDistance = new Vector3(0,0,-3.1f);
 		}
 	}
 	void moveCounter() {
