@@ -13,35 +13,33 @@ public class DiceCheckZone : MonoBehaviour
 	private Vector3 moveDistance;
 	private Vector3 endPosition;
 	private int moves = 0;
+	private bool triggerActive;
 	
 	void Start() {
 		counterRB = counter.GetComponent<Rigidbody>();
-		endPosition = counterRB.transform.position + moveDistance;
+		endPosition = counterRB.transform.position;
+		triggerActive = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		diceVelocity = DicePhysics.diceVelocity;
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			for(int i = 0; i < diceLandedNumber; i++) {
-				UpdatedMoveDistance();
-				endPosition += moveDistance;
-				moves++;
-				
-				if (moves > 40) {
-					moves = 1;
-					endPosition = counterRB.transform.position;
-				}
-			}
+		if (Input.GetKeyDown (KeyCode.Space)) {	
+			StartCoroutine(buffer());
 		}
-		Debug.Log(endPosition);
+		if (counterRB.transform.position != endPosition){
+			moveCounter();
+		}
 	}
 
+	IEnumerator buffer() {
+		yield return new WaitForSeconds(0.1f);
+		triggerActive = true;
+	}
 
 	void OnTriggerStay(Collider col)
 	{
-		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f) {
+		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f && triggerActive) {
 			switch (col.gameObject.name) {
 			case "Side1":
 				diceLandedNumber = 6;
@@ -61,11 +59,21 @@ public class DiceCheckZone : MonoBehaviour
 			case "Side6":
 				diceLandedNumber = 1;
 				break;
+			
 			}
-			
-			
-			moveCounter();
-
+			for(int i = 0; i < diceLandedNumber; i++) {
+				UpdatedMoveDistance();
+				endPosition += moveDistance;
+				moves++;
+				if ((moves % 10) == 0){
+					counterRB.transform.Rotate(Vector3.up * 90);
+				}
+				if (moves > 40) {
+					moves = 0;
+					endPosition = counterRB.transform.position;
+				}
+			}
+			triggerActive = false;
 		}
 	}
 
