@@ -65,6 +65,7 @@ public class DiceCheckZone : MonoBehaviour
 				UpdatedMoveDistance();
 				endPosition += moveDistance;
 				moves++;
+				
 				if ((moves % 10) == 0){
 					counterRB.transform.Rotate(Vector3.up * 90);
 				}
