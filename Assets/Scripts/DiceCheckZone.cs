@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class DiceCheckZone : MonoBehaviour
 {
+	public GameObject dice1;
+	public GameObject dice2;
 	public GameObject counter;
-	Vector3 diceVelocity;
-	public static int diceLandedNumber = 0;
+	private Vector3 dice1Velocity;
+	private Vector3 dice2Velocity;
+	public static int dice1Result;
+	public static int dice2Result;
+	public static int diceTotal;
 	public static float delay = 0.5f;
 	private Rigidbody counterRB;
 	public float moveSpeed = 3f;
@@ -23,47 +28,98 @@ public class DiceCheckZone : MonoBehaviour
 
 	// Update is called once per frame
 	void Update () {
-		diceVelocity = DicePhysics.diceVelocity;
+		dice1Velocity = DicePhysics.dice1Velocity;
+		dice2Velocity = DicePhysics.dice2Velocity;
 		if (Input.GetKeyDown (KeyCode.Space)) {	
 			StartCoroutine(buffer());
 		}
 		if (counterRB.transform.position != endPosition){
 			moveCounter();
 		}
+
+		if (dice1Velocity.x == 0f && dice1Velocity.y == 0f && dice1Velocity.z == 0f && dice2Velocity.x == 0f && dice2Velocity.y == 0f && dice2Velocity.z == 0f && triggerActive) {
+			checkDice();
+		}
+	}
+
+	void checkDice() {	
+		dice1Result = 0;
+
+		//Check dice1
+		float dice1MaxDot = -1f;
+		
+		if(Vector3.Dot(dice1.transform.up, Vector3.up) > dice1MaxDot) {
+			dice1MaxDot = Vector3.Dot(dice1.transform.up, Vector3.up);
+			dice1Result = 2;
+		}
+		
+		if(Vector3.Dot(-dice1.transform.up, Vector3.up) > dice1MaxDot) {
+			dice1MaxDot = Vector3.Dot(-dice1.transform.up, Vector3.up);
+			dice1Result = 5;
+		}
+		
+		if(Vector3.Dot(dice1.transform.forward, Vector3.up) > dice1MaxDot) {
+			dice1MaxDot = Vector3.Dot(dice1.transform.forward, Vector3.up);
+			dice1Result = 1;
+		}
+		
+		if(Vector3.Dot(-dice1.transform.forward, Vector3.up) > dice1MaxDot) {
+			dice1MaxDot = Vector3.Dot(-dice1.transform.forward, Vector3.up);
+			dice1Result = 6;
+		}
+		
+		if(Vector3.Dot(dice1.transform.right, Vector3.up) > dice1MaxDot) {
+			dice1MaxDot = Vector3.Dot(dice1.transform.right, Vector3.up);
+			dice1Result = 4;
+		}
+		
+		if(Vector3.Dot(-dice1.transform.right, Vector3.up) > dice1MaxDot) {
+			dice1MaxDot = Vector3.Dot(-dice1.transform.right, Vector3.up);
+			dice1Result = 3;
+		}
+		//Check dice2
+
+		float dice2MaxDot = -1f;
+
+		if(Vector3.Dot(dice2.transform.up, Vector3.up) > dice2MaxDot) {
+			dice2MaxDot = Vector3.Dot(dice2.transform.up, Vector3.up);
+			dice2Result = 2;
+		}
+		
+		if(Vector3.Dot(-dice2.transform.up, Vector3.up) > dice2MaxDot) {
+			dice2MaxDot = Vector3.Dot(-dice2.transform.up, Vector3.up);
+			dice2Result = 5;
+		}
+		
+		if(Vector3.Dot(dice2.transform.forward, Vector3.up) > dice2MaxDot) {
+			dice2MaxDot = Vector3.Dot(dice2.transform.forward, Vector3.up);
+			dice2Result = 1;
+		}
+		
+		if(Vector3.Dot(-dice2.transform.forward, Vector3.up) > dice2MaxDot) {
+			dice2MaxDot = Vector3.Dot(-dice2.transform.forward, Vector3.up);
+			dice2Result = 6;
+		}
+		
+		if(Vector3.Dot(dice2.transform.right, Vector3.up) > dice2MaxDot) {
+			dice2MaxDot = Vector3.Dot(dice2.transform.right, Vector3.up);
+			dice2Result = 4;
+		}
+		
+		if(Vector3.Dot(-dice2.transform.right, Vector3.up) > dice2MaxDot) {
+			dice2MaxDot = Vector3.Dot(-dice2.transform.right, Vector3.up);
+			dice2Result = 3;
+		}
+
+
+		diceTotal = dice1Result + dice2Result;
+		triggerActive = false;
+		StartCoroutine(MoveCounterCoroutine(diceTotal));
 	}
 
 	IEnumerator buffer() {
 		yield return new WaitForSeconds(0.1f);
 		triggerActive = true;
-	}
-
-	void OnTriggerStay(Collider col)
-	{
-		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f && triggerActive) {
-			switch (col.gameObject.name) {
-			case "Side1":
-				diceLandedNumber = 6;
-				break;
-			case "Side2":
-				diceLandedNumber = 5;
-				break;
-			case "Side3":
-				diceLandedNumber = 4;
-				break;
-			case "Side4":
-				diceLandedNumber = 3;
-				break;
-			case "Side5":
-				diceLandedNumber = 2;
-				break;
-			case "Side6":
-				diceLandedNumber = 1;
-				break;
-			
-			}
-			StartCoroutine(MoveCounterCoroutine(diceLandedNumber));
-			triggerActive = false;
-		}
 	}
 
 	IEnumerator MoveCounterCoroutine(int movesToMake) {
@@ -91,25 +147,24 @@ public class DiceCheckZone : MonoBehaviour
 			endPosition = counterRB.transform.position;
 		}
 		}
-		Debug.Log(moves);
-    }
+	}
 
 	void UpdatedMoveDistance() {
-		if ( moves == 0 || moves == 9) {
+		if ( moves == 0 ) {
 			moveDistance = new Vector3(-4.3f,0,0);
-		}else if (moves >= 1 && moves <= 8) {
-			moveDistance = new Vector3(-3.2f,0,0);
-		}else if (moves == 10 || moves == 19) {
+		}else if (moves >= 1 && moves <= 9) {
+			moveDistance = new Vector3(-3.1f,0,0);
+		}else if (moves == 10) {
 			moveDistance = new Vector3 (0,0,4.3f);
-		}else if (moves >= 11 && moves <= 18) {
+		}else if (moves >= 11 && moves <= 19) {
 			moveDistance = new Vector3(0,0,3.1f);
-		}else if ( moves == 20 || moves == 29) {
+		}else if ( moves == 20) {
 			moveDistance = new Vector3 (4.3f,0,0);
-		}else if (moves >= 22 && moves <= 28) {
+		}else if (moves >= 21 && moves <= 29) {
 			moveDistance = new Vector3(3.1f,0,0);
-		}else if ( moves == 30 || moves == 39) {
+		}else if ( moves == 30) {
 			moveDistance = new Vector3 (0,0,-4.3f);
-		}else if (moves >= 31 && moves <= 38) {
+		}else if (moves >= 31 && moves <= 39) {
 			moveDistance = new Vector3(0,0,-3.1f);
 		}
 	}

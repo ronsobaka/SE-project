@@ -11,6 +11,10 @@ public class DiceResult : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DiceResultText.text = "You rolled a " + DiceCheckZone.diceLandedNumber;
+        if (DiceCheckZone.diceTotal == 11){
+            DiceResultText.text = "You rolled an " + (DiceCheckZone.diceTotal);
+        } else {
+            DiceResultText.text = "You rolled a " + (DiceCheckZone.diceTotal);
+        }
     }
 }
