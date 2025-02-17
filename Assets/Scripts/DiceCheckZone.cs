@@ -95,21 +95,21 @@ public class DiceCheckZone : MonoBehaviour
     }
 
 	void UpdatedMoveDistance() {
-		if ( moves == 0 ) {
+		if ( moves == 0 || moves == 9) {
 			moveDistance = new Vector3(-4.3f,0,0);
-		}else if (moves >= 2 && moves <= 9) {
-			moveDistance = new Vector3(-3.1f,0,0);
-		}else if (moves == 10) {
+		}else if (moves >= 1 && moves <= 8) {
+			moveDistance = new Vector3(-3.2f,0,0);
+		}else if (moves == 10 || moves == 19) {
 			moveDistance = new Vector3 (0,0,4.3f);
-		}else if (moves >= 11 && moves <= 19) {
+		}else if (moves >= 11 && moves <= 18) {
 			moveDistance = new Vector3(0,0,3.1f);
-		}else if ( moves == 20) {
+		}else if ( moves == 20 || moves == 29) {
 			moveDistance = new Vector3 (4.3f,0,0);
-		}else if (moves >= 21 && moves <= 29) {
+		}else if (moves >= 22 && moves <= 28) {
 			moveDistance = new Vector3(3.1f,0,0);
-		}else if ( moves == 30) {
+		}else if ( moves == 30 || moves == 39) {
 			moveDistance = new Vector3 (0,0,-4.3f);
-		}else if (moves >= 31 && moves <= 39) {
+		}else if (moves >= 31 && moves <= 38) {
 			moveDistance = new Vector3(0,0,-3.1f);
 		}
 	}
