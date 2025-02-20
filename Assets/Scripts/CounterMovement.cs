@@ -4,30 +4,26 @@ using UnityEngine;
 
 public class CounterMovement : MonoBehaviour
 {
-	public GameObject counter;
-	private static float delay = 0.5f;
-	private Rigidbody counterRB;
-	private float moveSpeed = 3f;
-	private Vector3 moveDistance;
+	private static float delay = 0.1f;
+	public static Rigidbody counterRB;
+	private float moveSpeed = 10f;
 	private Vector3 endPosition;
-	private int moves = 0;
+	private Vector3 moveDistance;
+	private int moves;
 	public static bool moveCounterTrigger = false;
-	
+	public static int[]  playerPositions;
 	
 	void Start() {
-		counterRB = counter.GetComponent<Rigidbody>();
-		endPosition = counterRB.transform.position;
+		playerPositions = new int[6];
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
-		if (counterRB.transform.position != endPosition){
-			moveCounter();
-		}
 
 		if (moveCounterTrigger) {
-			Debug.Log("YOu fuckin ediot");
-			StartCoroutine(MoveCounterCoroutine(DicePhysics.diceTotal));
+			endPosition = counterRB.transform.position;
+			moves = playerPositions[GameController.currentPlayer];
+			StartCoroutine(MoveCounterCoroutine(DiceRoll.diceTotal));
 			moveCounterTrigger = false;
 		}
 	}
@@ -47,17 +43,22 @@ public class CounterMovement : MonoBehaviour
 
             // Move the counter to the new position
             while (counterRB.transform.position != endPosition) {
-                moveCounter();
+                moveOneStep();
                 yield return null; // Wait for the next frame
             }
 
             // Wait for a specified delay before the next move
             yield return new WaitForSeconds(delay);
 
-			if (moves == 40) {
-				moves = 0;
-				endPosition = counterRB.transform.position;
-			}
+			
+		}
+		if (moves == 40) {
+			playerPositions[GameController.currentPlayer] = 0;
+		} else {
+			playerPositions[GameController.currentPlayer] += movesToMake;
+		}
+		for (int j = 0; j < 6; j++) {
+			Debug.Log(playerPositions[j]);
 		}
 		
 	}
@@ -81,7 +82,7 @@ public class CounterMovement : MonoBehaviour
 			moveDistance = new Vector3(0,0,-3.1f);
 		}
 	}
-	void moveCounter() {
+	void moveOneStep() {
 		
 		if (counterRB.transform.position != endPosition) {
 			counterRB.transform.position = Vector3.MoveTowards(counterRB.transform.position, endPosition, moveSpeed * Time.deltaTime);

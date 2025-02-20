@@ -4,15 +4,41 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    public GameObject[] playerCounters;
+    public Vector3[] startPositions;
+    public static int  currentPlayer;
+    public GameObject counterPrefab;
+    private int humanPlayers = 2;
+    
+
+    void Start() {
+        setStartPostitions();
+        playerCounters = new GameObject[humanPlayers];
         
+        currentPlayer = 0;
+        for (int i = 0; i < humanPlayers; i++) {
+            playerCounters[i] = (GameObject)Instantiate(counterPrefab, startPositions[i], Quaternion.identity) as GameObject;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+        if (Input.GetKeyDown (KeyCode.Space)) {	
+			CounterMovement.counterRB = playerCounters[currentPlayer].GetComponent<Rigidbody>();
+            currentPlayer += 1;
+            if (currentPlayer == (humanPlayers)){
+                currentPlayer = 0;
+            }
+		}
+    }
+
+
+    void setStartPostitions() {
+        startPositions = new Vector3[6];
+        startPositions[0] = new Vector3(15.5f, 0.9f, -19f);
+        startPositions[1] = new Vector3(15.5f, 0.9f, -18f);
+        startPositions[2] = new Vector3(15.5f, 0.9f, -17f);
+        startPositions[3] = new Vector3(16.75f, 0.9f, -19f);
+        startPositions[4] = new Vector3(16.75f, 0.9f, -18f);
+        startPositions[5] = new Vector3(16.75f, 0.9f, -17f);
     }
 }
