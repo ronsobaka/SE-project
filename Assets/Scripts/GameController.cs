@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public GameObject[] playerCounters;
-    public Vector3[] startPositions;
+    public static Vector3[] startPositions;
     public static bool[] playersInJail;
     public static int  currentPlayer;
     public GameObject counterPrefab;
@@ -16,7 +16,6 @@ public class GameController : MonoBehaviour
     void Start() {
         setStartPostitions();
         playersInJail = new bool[6];
-        Debug.Log(playersInJail[0]);
         playerCounters = new GameObject[humanPlayers];
         
         currentPlayer = 0;
@@ -38,11 +37,11 @@ public class GameController : MonoBehaviour
 
     void setStartPostitions() {
         startPositions = new Vector3[6];
-        startPositions[0] = new Vector3(15.5f, 0.9f, -19f);
-        startPositions[1] = new Vector3(15.5f, 0.9f, -18f);
-        startPositions[2] = new Vector3(15.5f, 0.9f, -17f);
-        startPositions[3] = new Vector3(16.75f, 0.9f, -19f);
-        startPositions[4] = new Vector3(16.75f, 0.9f, -18f);
-        startPositions[5] = new Vector3(16.75f, 0.9f, -17f);
+        startPositions[1] = new Vector3(15.5f, 0.9f, -19f);
+        startPositions[2] = new Vector3(15.5f, 0.9f, -18f);
+        startPositions[3] = new Vector3(15.5f, 0.9f, -17f);
+        startPositions[4] = new Vector3(16.75f, 0.9f, -19f);
+        startPositions[5] = new Vector3(16.75f, 0.9f, -18f);
+        startPositions[0] = new Vector3(16.75f, 0.9f, -17f);
     }
 }

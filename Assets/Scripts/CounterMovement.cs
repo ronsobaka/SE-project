@@ -36,12 +36,9 @@ public class CounterMovement : MonoBehaviour
         	UpdateMoveDistance();
             endPosition += moveDistance;
             moves++;
-
-			if ((moves == 30) && (i == (movesToMake - 1))) {
-				Debug.Log("yes");
-				playerPositions[GameController.currentPlayer] = 10;
-				GameController.playersInJail[GameController.currentPlayer] = true;
-			}
+			Debug.Log(GameController.currentPlayer);
+			Debug.Log(playerPositions[GameController.currentPlayer]);
+			
 
             // Rotate the counter every 10 moves
             if ((moves % 10) == 0) {
@@ -57,14 +54,23 @@ public class CounterMovement : MonoBehaviour
             // Wait for a specified delay before the next move
             yield return new WaitForSeconds(delay);
 
+			if ((moves == 30) && (i == (movesToMake - 1))) {
+				Debug.Log("huh");
+				moves = 10;
+				playerPositions[GameController.currentPlayer] = 10;
+				GameController.playersInJail[GameController.currentPlayer] = true;
+				counterRB.transform.Rotate(Vector3.up * 180);
+				UpdateMoveDistance();
+
+				while (counterRB.transform.position != endPosition) {
+                	moveOneStep();
+                	yield return null; // Wait for the next frame
+            	}
+			}
 			
 		}			
 		
-		if (moves == 40) {
-			playerPositions[GameController.currentPlayer] = 0;
-		} else {
-			playerPositions[GameController.currentPlayer] += movesToMake;
-		}
+		playerPositions[GameController.currentPlayer] = moves;	
 		GameController.turnComplete = true;
 	}
 
@@ -147,6 +153,11 @@ public class CounterMovement : MonoBehaviour
 			moveDistance = new Vector3 (0,0,-4.3f);
 		}else if (moves >= 31 && moves <= 39) {
 			moveDistance = new Vector3(0,0,-3.1f);
+		} else if (moves == 40) {
+			moveDistance = new Vector3(0,0,0);
+			endPosition = GameController.startPositions[GameController.currentPlayer];
+			playerPositions[GameController.currentPlayer] = 0;
+			moves = 0;
 		}
 	}
 	void moveOneStep() {

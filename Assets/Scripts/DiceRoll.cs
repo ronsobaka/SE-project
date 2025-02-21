@@ -154,7 +154,6 @@ public class DiceRoll : MonoBehaviour {
 
 
 		diceTotal = dice1Result + dice2Result;
-		diceTotal = 30;
 		diceDetectTrigger = false;
 
 
