@@ -34,7 +34,7 @@ public class DiceRoll : MonoBehaviour {
 
 		//gives both dice a random force and torque
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown(KeyCode.Space) && GameController.turnComplete) {
 			rollDice();
 		}
 
@@ -52,7 +52,7 @@ public class DiceRoll : MonoBehaviour {
 			checkDice();
 		}
 
-		if (Input.GetKeyDown (KeyCode.Space)) {	
+		if (Input.GetKeyDown (KeyCode.Space) && GameController.turnComplete) {	
 			StartCoroutine(buffer());
 		}
 		
@@ -61,6 +61,7 @@ public class DiceRoll : MonoBehaviour {
 	IEnumerator buffer() {
 		yield return new WaitForSeconds(0.1f);
 		diceDetectTrigger = true;
+		GameController.turnComplete = false;
 	}
 
 	void rollDice() {
@@ -153,6 +154,7 @@ public class DiceRoll : MonoBehaviour {
 
 
 		diceTotal = dice1Result + dice2Result;
+		diceTotal = 30;
 		diceDetectTrigger = false;
 
 

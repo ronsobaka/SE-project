@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CounterMovement : MonoBehaviour
 {
-	private static float delay = 0.1f;
+	private static float delay = 0.00001f;
 	public static Rigidbody counterRB;
-	private float moveSpeed = 10f;
+	private float moveSpeed = 20f;
 	private Vector3 endPosition;
 	private Vector3 moveDistance;
 	private int moves;
@@ -32,9 +32,16 @@ public class CounterMovement : MonoBehaviour
 
 	IEnumerator MoveCounterCoroutine(int movesToMake) {
     	for (int i = 0; i < movesToMake; i++) {
+			
         	UpdateMoveDistance();
             endPosition += moveDistance;
             moves++;
+
+			if ((moves == 30) && (i == (movesToMake - 1))) {
+				Debug.Log("yes");
+				playerPositions[GameController.currentPlayer] = 10;
+				GameController.playersInJail[GameController.currentPlayer] = true;
+			}
 
             // Rotate the counter every 10 moves
             if ((moves % 10) == 0) {
@@ -51,29 +58,89 @@ public class CounterMovement : MonoBehaviour
             yield return new WaitForSeconds(delay);
 
 			
-		}
+		}			
+		
 		if (moves == 40) {
 			playerPositions[GameController.currentPlayer] = 0;
 		} else {
 			playerPositions[GameController.currentPlayer] += movesToMake;
 		}
-		for (int j = 0; j < 6; j++) {
-			Debug.Log(playerPositions[j]);
-		}
-		
+		GameController.turnComplete = true;
 	}
 
 	void UpdateMoveDistance() {
-		if ( moves == 0 ) {
-			moveDistance = new Vector3(-4.3f,0,0);
-		}else if (moves >= 1 && moves <= 9) {
-			moveDistance = new Vector3(-3.1f,0,0);
+		if (moves >= 0 && moves <= 8) {
+
+			moveDistance = new Vector3(-3.2f,0,0);
+
+		}else if (moves == 9) {
+
+			moveDistance = new Vector3(0,0,0);
+
+			if (GameController.currentPlayer == 1) {
+				endPosition = new Vector3(-19.5f, 0.9f, -15f);
+			} else if (GameController.currentPlayer == 2) {
+				endPosition = new Vector3(-19.5f, 0.9f, -16.5f);
+			} else if (GameController.currentPlayer == 3) {
+				endPosition = new Vector3(-19.5f, 0.9f, -18f);
+			} else if (GameController.currentPlayer == 4) {
+				endPosition = new Vector3(-19.5f, 0.9f, -19f);
+			} else if (GameController.currentPlayer == 5) {
+				endPosition = new Vector3(-17.5f, 0.9f, -19f);
+			} else if (GameController.currentPlayer == 0) {
+				endPosition = new Vector3(-15.5f, 0.9f, -19f);
+			}
 		}else if (moves == 10) {
-			moveDistance = new Vector3 (0,0,4.3f);
-		}else if (moves >= 11 && moves <= 19) {
+
+			moveDistance = new Vector3(0,0,0);
+
+			if (GameController.playersInJail[GameController.currentPlayer]){
+
+				if (GameController.currentPlayer == 1) {
+					endPosition = new Vector3(-17f, 0.9f, -17.5f);
+				}else if (GameController.currentPlayer == 2) {
+					endPosition = new Vector3(-17f, 0.9f, -16.5f);
+				} else if (GameController.currentPlayer == 3) {
+					endPosition = new Vector3(-17f, 0.9f, -15.5f);
+				} else if (GameController.currentPlayer == 4) {
+					endPosition = new Vector3(-16f, 0.9f, -17.5f);
+				} else if (GameController.currentPlayer == 5) {
+					endPosition = new Vector3(-16f, 0.9f, -16.5f);
+				} else if (GameController.currentPlayer == 0) {
+					endPosition = new Vector3(-16f, 0.9f, -15.5f);
+				}
+
+			} else {
+
+				if (GameController.currentPlayer == 1) {
+					moveDistance = new Vector3(0,0,3.1f);
+				}else if (GameController.currentPlayer == 2) {
+					moveDistance = new Vector3(0,0,3.1f);
+				} else if (GameController.currentPlayer == 3) {
+					endPosition = new Vector3(-18.5f, 0.9f, -11.9f);
+				} else if (GameController.currentPlayer == 4) {
+					endPosition = new Vector3(-18.5f, 0.9f, -13.4f);
+				} else if (GameController.currentPlayer == 5) {
+					endPosition = new Vector3(-17.5f, 0.9f, -11.9f);
+				} else if (GameController.currentPlayer == 0) {
+					endPosition = new Vector3(-17.5f, 0.9f, -13.4f);
+				}
+
+			}
+			
+		}else if (moves >= 11 && moves <= 18) {
 			moveDistance = new Vector3(0,0,3.1f);
-		}else if ( moves == 20) {
-			moveDistance = new Vector3 (4.3f,0,0);
+		}else if (moves == 19) {
+			moveDistance = new Vector3(0,0,6.5f);
+		}else if ((moves == 20) && ((GameController.currentPlayer == 1) || (GameController.currentPlayer == 2))) {
+			moveDistance = new Vector3(0,0,0);
+			if (GameController.currentPlayer == 1) {
+				endPosition = new Vector3(-12f, 0.9f, 16.4f);
+			} else {
+				endPosition = new Vector3(-13f, 0.9f, 16.4f);
+			}
+		}else if (moves == 20) {
+			moveDistance = new Vector3 (5.5f,0,0);
 		}else if (moves >= 21 && moves <= 29) {
 			moveDistance = new Vector3(3.1f,0,0);
 		}else if ( moves == 30) {

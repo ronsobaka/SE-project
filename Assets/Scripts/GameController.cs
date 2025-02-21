@@ -6,13 +6,17 @@ public class GameController : MonoBehaviour
 {
     public GameObject[] playerCounters;
     public Vector3[] startPositions;
+    public static bool[] playersInJail;
     public static int  currentPlayer;
     public GameObject counterPrefab;
-    private int humanPlayers = 2;
+    private int humanPlayers = 6;
+    public static bool turnComplete = true;
     
 
     void Start() {
         setStartPostitions();
+        playersInJail = new bool[6];
+        Debug.Log(playersInJail[0]);
         playerCounters = new GameObject[humanPlayers];
         
         currentPlayer = 0;
@@ -22,7 +26,7 @@ public class GameController : MonoBehaviour
     }
 
     void Update() {
-        if (Input.GetKeyDown (KeyCode.Space)) {	
+        if ((Input.GetKeyDown(KeyCode.Space)) && turnComplete) {	
 			CounterMovement.counterRB = playerCounters[currentPlayer].GetComponent<Rigidbody>();
             currentPlayer += 1;
             if (currentPlayer == (humanPlayers)){
