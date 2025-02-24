@@ -6,8 +6,14 @@ using UnityEngine;
 public class CSVReader : MonoBehaviour {
 
 
-    public static string[,] readData(string file, string[,] array){
-        string filePath = Path.Combine(Application.dataPath, "csvData", file);
+    // Line 18 is where the Second set starts in card data
+
+    void Start() {
+        GameController.boardData = readData("PropertyTycoonBoardData.csv", GameController.boardData);
+    }
+
+    string[,] readData(string file, string[,] array){
+        string filePath = Path.Combine(Application.dataPath, "Files", file);
 
         if (File.Exists(filePath)) {
             string[] csvContent = File.ReadAllLines(filePath);

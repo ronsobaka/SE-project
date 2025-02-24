@@ -40,7 +40,7 @@ public class DiceRoll : MonoBehaviour {
 		}
 
 		// temporary tracker for dice results
-
+		
 		if (diceTotal == 11){
             DiceResultText.text = "You rolled an " + (diceTotal);
         } else {
@@ -162,7 +162,6 @@ public class DiceRoll : MonoBehaviour {
 			doubleRolled = true;
 		}
 		diceTotal = dice1Result + dice2Result;
-
 		diceDetectTrigger = false;
 
 

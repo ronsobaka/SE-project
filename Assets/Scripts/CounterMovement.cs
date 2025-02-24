@@ -11,11 +11,11 @@ public class CounterMovement : MonoBehaviour
 	private Vector3 moveDistance;
 	private int moves;
 	public static bool moveCounterTrigger = false;
-	public static int[]  playerPositions;
+	
 	private int NumberDoublesRolled;
 	
 	void Start() {
-		playerPositions = new int[6];
+		GameController.playerPositions = new int[6];
 	}
 	
 	// Update is called once per frame
@@ -23,9 +23,10 @@ public class CounterMovement : MonoBehaviour
 
 		if (moveCounterTrigger) {
 			endPosition = counterRB.transform.position;
-			moves = playerPositions[GameController.currentPlayer];
+			moves = GameController.playerPositions[GameController.currentPlayer];
 			StartCoroutine(MoveCounterCoroutine(DiceRoll.diceTotal));
 			moveCounterTrigger = false;
+			
 		}
 	}
 
@@ -65,30 +66,35 @@ public class CounterMovement : MonoBehaviour
 			
 		}			
 		
+		//Updates Gamecontroller of the player position
+		GameController.playerPositions[GameController.currentPlayer] = moves;
+
 		//Double Event 
-		playerPositions[GameController.currentPlayer] = moves;
 		if (DiceRoll.doubleRolled) {
 			NumberDoublesRolled++;
 			if (NumberDoublesRolled == 3) {
 				StartCoroutine(sendPlayerToJail());
+				EndOfTurnActions.decideAction();
 				GameController.currentPlayer++;
 			}
 		} else {
+			EndOfTurnActions.decideAction();
 			GameController.currentPlayer++;
 			NumberDoublesRolled = 0;
 		}
+
 		if (GameController.currentPlayer == (GameController.humanPlayers)){
 			GameController.currentPlayer = 0;
 		}
+		
 
-		//End turn
 		GameController.turnComplete = true;
 	}
 
 
 	IEnumerator sendPlayerToJail() {
 		moves = 10;
-		playerPositions[GameController.currentPlayer] = 10;
+		GameController.playerPositions[GameController.currentPlayer] = 10;
 		GameController.playersInJail[GameController.currentPlayer] = true;
 		counterRB.transform.Rotate(Vector3.up * 180);
 		UpdateMoveDistance();
@@ -186,7 +192,7 @@ public class CounterMovement : MonoBehaviour
 		} else if (moves == 40) {
 			moveDistance = new Vector3(0,0,0);
 			endPosition = GameController.startPositions[GameController.currentPlayer];
-			playerPositions[GameController.currentPlayer] = 0;
+			GameController.playerPositions[GameController.currentPlayer] = 0;
 			
 		}
 	}
