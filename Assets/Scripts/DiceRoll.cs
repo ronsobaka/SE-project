@@ -13,7 +13,8 @@ public class DiceRoll : MonoBehaviour {
 	private Vector3 dice2Velocity;
 	private bool diceDetectTrigger;
 	public static int diceTotal;
-	public TextMeshProUGUI DiceResultText;   
+	public TextMeshProUGUI DiceResultText;
+	public static bool doubleRolled = false;
 
 	// Use this for initialization
 	void Start () {
@@ -84,9 +85,15 @@ public class DiceRoll : MonoBehaviour {
 
 	void checkDice() {	
 		int dice1Result = 0;
+		float dice1MaxDot = -1f;
+
+		int dice2Result = 0;
+		float dice2MaxDot = -1f;
+		
+		doubleRolled = false;
 
 		//Check dice1
-		float dice1MaxDot = -1f;
+		
 		
 		if(Vector3.Dot(dice1.transform.up, Vector3.up) > dice1MaxDot) {
 			dice1MaxDot = Vector3.Dot(dice1.transform.up, Vector3.up);
@@ -119,8 +126,7 @@ public class DiceRoll : MonoBehaviour {
 		}
 		//Check dice2
 
-		float dice2MaxDot = -1f;
-		int dice2Result = 0;
+		
 
 		if(Vector3.Dot(dice2.transform.up, Vector3.up) > dice2MaxDot) {
 			dice2MaxDot = Vector3.Dot(dice2.transform.up, Vector3.up);
@@ -152,8 +158,11 @@ public class DiceRoll : MonoBehaviour {
 			dice2Result = 3;
 		}
 
-
+		if (dice1Result == dice2Result) {
+			doubleRolled = true;
+		}
 		diceTotal = dice1Result + dice2Result;
+
 		diceDetectTrigger = false;
 
 

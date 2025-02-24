@@ -12,6 +12,7 @@ public class CounterMovement : MonoBehaviour
 	private int moves;
 	public static bool moveCounterTrigger = false;
 	public static int[]  playerPositions;
+	private int NumberDoublesRolled;
 	
 	void Start() {
 		playerPositions = new int[6];
@@ -31,13 +32,13 @@ public class CounterMovement : MonoBehaviour
 	
 
 	IEnumerator MoveCounterCoroutine(int movesToMake) {
+		
     	for (int i = 0; i < movesToMake; i++) {
-			
+
         	UpdateMoveDistance();
             endPosition += moveDistance;
             moves++;
-			Debug.Log(GameController.currentPlayer);
-			Debug.Log(playerPositions[GameController.currentPlayer]);
+			
 			
 
             // Rotate the counter every 10 moves
@@ -53,25 +54,49 @@ public class CounterMovement : MonoBehaviour
 
             // Wait for a specified delay before the next move
             yield return new WaitForSeconds(delay);
-
+			//If lands on go to jail square
 			if ((moves == 30) && (i == (movesToMake - 1))) {
-				Debug.Log("huh");
-				moves = 10;
-				playerPositions[GameController.currentPlayer] = 10;
-				GameController.playersInJail[GameController.currentPlayer] = true;
-				counterRB.transform.Rotate(Vector3.up * 180);
-				UpdateMoveDistance();
 
-				while (counterRB.transform.position != endPosition) {
-                	moveOneStep();
-                	yield return null; // Wait for the next frame
-            	}
+				StartCoroutine(sendPlayerToJail());
+				
+			} else if (moves == 40) {
+				moves = 0;
 			}
 			
 		}			
 		
-		playerPositions[GameController.currentPlayer] = moves;	
+		//Double Event 
+		playerPositions[GameController.currentPlayer] = moves;
+		if (DiceRoll.doubleRolled) {
+			NumberDoublesRolled++;
+			if (NumberDoublesRolled == 3) {
+				StartCoroutine(sendPlayerToJail());
+				GameController.currentPlayer++;
+			}
+		} else {
+			GameController.currentPlayer++;
+			NumberDoublesRolled = 0;
+		}
+		if (GameController.currentPlayer == (GameController.humanPlayers)){
+			GameController.currentPlayer = 0;
+		}
+
+		//End turn
 		GameController.turnComplete = true;
+	}
+
+
+	IEnumerator sendPlayerToJail() {
+		moves = 10;
+		playerPositions[GameController.currentPlayer] = 10;
+		GameController.playersInJail[GameController.currentPlayer] = true;
+		counterRB.transform.Rotate(Vector3.up * 180);
+		UpdateMoveDistance();
+
+		while (counterRB.transform.position != endPosition) {
+			moveOneStep();
+			yield return null; // Wait for the next frame
+		}
 	}
 
 	void UpdateMoveDistance() {
@@ -102,19 +127,24 @@ public class CounterMovement : MonoBehaviour
 
 			if (GameController.playersInJail[GameController.currentPlayer]){
 
-				if (GameController.currentPlayer == 1) {
-					endPosition = new Vector3(-17f, 0.9f, -17.5f);
-				}else if (GameController.currentPlayer == 2) {
-					endPosition = new Vector3(-17f, 0.9f, -16.5f);
-				} else if (GameController.currentPlayer == 3) {
-					endPosition = new Vector3(-17f, 0.9f, -15.5f);
-				} else if (GameController.currentPlayer == 4) {
-					endPosition = new Vector3(-16f, 0.9f, -17.5f);
-				} else if (GameController.currentPlayer == 5) {
-					endPosition = new Vector3(-16f, 0.9f, -16.5f);
-				} else if (GameController.currentPlayer == 0) {
-					endPosition = new Vector3(-16f, 0.9f, -15.5f);
+				GameController.turnsInJail[GameController.currentPlayer] += 1;
+				
+				if(GameController.turnsInJail[GameController.currentPlayer] == 2) {
+					if (GameController.currentPlayer == 1) {
+						endPosition = new Vector3(-17f, 0.9f, -17.5f);
+					}else if (GameController.currentPlayer == 2) {
+						endPosition = new Vector3(-17f, 0.9f, -16.5f);
+					} else if (GameController.currentPlayer == 3) {
+						endPosition = new Vector3(-17f, 0.9f, -15.5f);
+					} else if (GameController.currentPlayer == 4) {
+						endPosition = new Vector3(-16f, 0.9f, -17.5f);
+					} else if (GameController.currentPlayer == 5) {
+						endPosition = new Vector3(-16f, 0.9f, -16.5f);
+					} else if (GameController.currentPlayer == 0) {
+						endPosition = new Vector3(-16f, 0.9f, -15.5f);
+					}
 				}
+				
 
 			} else {
 
@@ -157,7 +187,7 @@ public class CounterMovement : MonoBehaviour
 			moveDistance = new Vector3(0,0,0);
 			endPosition = GameController.startPositions[GameController.currentPlayer];
 			playerPositions[GameController.currentPlayer] = 0;
-			moves = 0;
+			
 		}
 	}
 	void moveOneStep() {

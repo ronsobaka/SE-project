@@ -7,9 +7,10 @@ public class GameController : MonoBehaviour
     public GameObject[] playerCounters;
     public static Vector3[] startPositions;
     public static bool[] playersInJail;
+    public static int[] turnsInJail;
     public static int  currentPlayer;
     public GameObject counterPrefab;
-    private int humanPlayers = 6;
+    public static int humanPlayers = 2;
     public static bool turnComplete = true;
     
 
@@ -27,10 +28,6 @@ public class GameController : MonoBehaviour
     void Update() {
         if ((Input.GetKeyDown(KeyCode.Space)) && turnComplete) {	
 			CounterMovement.counterRB = playerCounters[currentPlayer].GetComponent<Rigidbody>();
-            currentPlayer += 1;
-            if (currentPlayer == (humanPlayers)){
-                currentPlayer = 0;
-            }
 		}
     }
 
