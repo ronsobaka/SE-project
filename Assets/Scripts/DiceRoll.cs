@@ -12,9 +12,7 @@ public class DiceRoll : MonoBehaviour {
 	private Vector3 dice1Velocity;
 	private Vector3 dice2Velocity;
 	private bool diceDetectTrigger;
-	public static int diceTotal;
-	public TextMeshProUGUI DiceResultText;
-	public static bool doubleRolled = false;
+	public static int diceTotal;	public static bool doubleRolled = false;
 
 	// Use this for initialization
 	void Start () {
@@ -38,14 +36,6 @@ public class DiceRoll : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space) && GameController.turnComplete) {
 			rollDice();
 		}
-
-		// temporary tracker for dice results
-		
-		if (diceTotal == 11){
-            DiceResultText.text = "You rolled an " + (diceTotal);
-        } else {
-            DiceResultText.text = "You rolled a " + (diceTotal);
-        }
 		
 		//conditions for both dice being still and wanting to check
 

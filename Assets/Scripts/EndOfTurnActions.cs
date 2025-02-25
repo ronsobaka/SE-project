@@ -5,27 +5,33 @@ using TMPro;
 
 public class EndOfTurnActions : MonoBehaviour
 {
-    public static TextMeshProUGUI DecisionText;
     private static int currentPlayer;
     private static int[] playerPositions;
 
+    public TextMeshProUGUI decisionOutput;
+    public static TextMeshProUGUI staticDecisionOutput;
+
     void Start() {
-        DecisionText = GetComponent<TextMeshProUGUI>();
-        DecisionText.enabled = false;
+        decisionOutput.enabled = false;
+        staticDecisionOutput = decisionOutput;
+    }
+
+    void Update() {
+        decisionOutput.text = staticDecisionOutput.text;
     }
 
     public static void decideAction() {
         GameController.turnActionsTrigger = false;
         playerPositions = GameController.playerPositions;
         currentPlayer = GameController.currentPlayer;
-        DecisionText.GetComponent<TextMeshProUGUI>().enabled = true;  
+        staticDecisionOutput.enabled = true;  
 
         if (GameController.boardData[playerPositions[currentPlayer], 2] != ""){
 
-            DecisionText.text = "You landed on " + GameController.boardData[playerPositions[currentPlayer], 1] + " This costs " + GameController.boardData[playerPositions[currentPlayer], 5] + "<br><br>Press b to buy or a to auction.";
+            staticDecisionOutput.text = "You landed on " + GameController.boardData[playerPositions[currentPlayer], 1] + " This costs " + GameController.boardData[playerPositions[currentPlayer], 5] + "<br><br>Press b to buy or a to auction.";
             Debug.Log("Called");
         }else {
-            Debug.Log("DecisionText not called");
+            Debug.Log("decisionOutput not called");
         }
     }
 }
