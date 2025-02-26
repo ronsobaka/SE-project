@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public static int[] turnsInJail;
     public static int  currentPlayer;
     public GameObject counterPrefab;
-    public static int humanPlayers = 2;
+    public static int humanPlayers;
     public static bool turnComplete = true;
     public static int[] playerBalances;
     public static int bankBalance; 

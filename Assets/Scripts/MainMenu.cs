@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
+    public void PlayGame( int numberOfPlayers)
     {
+        GameController.humanPlayers = numberOfPlayers;
+        
         SceneManager.LoadSceneAsync(1);
     }
 }
