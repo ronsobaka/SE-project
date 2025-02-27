@@ -8,30 +8,30 @@ public class EndOfTurnActions : MonoBehaviour
     private static int currentPlayer;
     private static int[] playerPositions;
 
-    public TextMeshProUGUI decisionOutput;
-    public static TextMeshProUGUI staticDecisionOutput;
+    //public TextMeshProUGUI decisionOutput;
+    //public static TextMeshProUGUI staticDecisionOutput;
 
     void Start() {
-        decisionOutput.enabled = false;
-        staticDecisionOutput = decisionOutput;
+        //decisionOutput.enabled = false;
+        //staticDecisionOutput = decisionOutput;
     }
 
-    void Update() {
-        decisionOutput.text = staticDecisionOutput.text;
-    }
+    //void Update() {
+        //decisionOutput.text = staticDecisionOutput.text;
+    //}
 
     public static void decideAction() {
+
         GameController.turnActionsTrigger = false;
         playerPositions = GameController.playerPositions;
         currentPlayer = GameController.currentPlayer;
-        staticDecisionOutput.enabled = true;  
+        //staticDecisionOutput.enabled = true;  
 
         if (GameController.boardData[playerPositions[currentPlayer], 2] != ""){
 
-            staticDecisionOutput.text = "You landed on " + GameController.boardData[playerPositions[currentPlayer], 1] + " This costs " + GameController.boardData[playerPositions[currentPlayer], 5] + "<br><br>Press b to buy or a to auction.";
-            Debug.Log("Called");
-        }else {
-            Debug.Log("decisionOutput not called");
+            //staticDecisionOutput.text = "You landed on " + GameController.boardData[playerPositions[currentPlayer], 1] + " This costs " + GameController.boardData[playerPositions[currentPlayer], 5] + "<br><br>Press b to buy or a to auction.";
+            PopUps pop = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PopUps>();
+            pop.popUpCard();
         }
     }
 }
