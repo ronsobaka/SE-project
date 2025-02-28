@@ -56,7 +56,7 @@ public class PopUps : MonoBehaviour  {
         TextMeshProUGUI propertyName = GameObject.FindGameObjectWithTag("PropertyName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI propertyCost = GameObject.FindGameObjectWithTag("PropertyCost").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI rentPrices = GameObject.FindGameObjectWithTag("RentPrices").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI constructionCost = GameObject.FindGameObjectWithTag("ConstructionCost").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI constructionCost = GameObject.FindGameObjectWithTag("ConstructionCosts").GetComponent<TextMeshProUGUI>();
 
         propertyName.text = boardData[tileNumber, 1];
         propertyCost.text = "Price: " + boardData[tileNumber, 5];
