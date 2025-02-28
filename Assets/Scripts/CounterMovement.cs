@@ -87,8 +87,6 @@ public class CounterMovement : MonoBehaviour
 			GameController.currentPlayer = 0;
 		}
 		
-
-		GameController.turnComplete = true;
 	}
 
 

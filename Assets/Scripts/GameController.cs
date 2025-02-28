@@ -39,8 +39,6 @@ public class GameController : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space)) && turnComplete) {	
 			CounterMovement.counterRB = playerCounters[currentPlayer].GetComponent<Rigidbody>();
 		}
-        
-
     }
 
     void setupBalances() {

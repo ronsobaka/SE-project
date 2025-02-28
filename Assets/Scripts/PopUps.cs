@@ -7,9 +7,11 @@ using TMPro;
 public class PopUps : MonoBehaviour  {
     
     public GameObject popUpBox;
+    public Button buyButton;
     public Animator animator;
+    public GameObject textParentComponent;
     public Image cardImage;
-    public Sprite[] cardSprites;
+    public Sprite[] cardSprites; 
     private Dictionary<string, Sprite> cardDictionary;
     
 
@@ -23,7 +25,10 @@ public class PopUps : MonoBehaviour  {
             { "Red", cardSprites[4] },
             { "Yellow", cardSprites[5] },
             { "Green", cardSprites[6] },
-            { "Deep blue", cardSprites[7] }
+            { "Deep blue", cardSprites[7] },
+            { "Station", cardSprites[8] },
+            { "Tesla Utility", cardSprites[9] },
+            { "Edison Utility", cardSprites[10] }
         };
     }
 
@@ -35,11 +40,31 @@ public class PopUps : MonoBehaviour  {
 
         if (cardDictionary.ContainsKey(propertyType)) {
             cardImage.sprite = cardDictionary[propertyType];
-        } else {
+            setPropertyCardText();
+        } else {      
             Debug.LogWarning("Property type not found in dictionary: " + propertyType);
         }
-
+        buyButton.enabled = true;
         popUpBox.SetActive(true);
         animator.SetTrigger("pop");
+    }
+
+    void setPropertyCardText() {
+        string[,] boardData = GameController.boardData;
+        int tileNumber = GameController.playerPositions[GameController.currentPlayer];
+
+        TextMeshProUGUI propertyName = GameObject.FindGameObjectWithTag("PropertyName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI propertyCost = GameObject.FindGameObjectWithTag("PropertyCost").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI rentPrices = GameObject.FindGameObjectWithTag("RentPrices").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI constructionCost = GameObject.FindGameObjectWithTag("ConstructionCost").GetComponent<TextMeshProUGUI>();
+
+        propertyName.text = boardData[tileNumber, 1];
+        propertyCost.text = "Price: " + boardData[tileNumber, 5];
+        rentPrices.text = "Unimproved rent: £" + boardData[tileNumber, 6] + "\n1 House rent: £" + boardData[tileNumber, 7] + "\n2 House rent: £" + boardData[tileNumber, 8] + "\n3 House rent: £" + boardData[tileNumber, 9] + "\n4 House rent: £" + boardData[tileNumber, 10]+ "\nHotel rent: £" + boardData[tileNumber, 11];
+        constructionCost.text = "House cost £" + boardData[tileNumber, 12] + "\nHotel cost £" + boardData[tileNumber, 12] + " + 4 houses";
+    }
+
+    public void endTurn() {
+        GameController.turnComplete = true;
     }
 }
