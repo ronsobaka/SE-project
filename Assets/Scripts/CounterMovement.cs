@@ -1,4 +1,4 @@
-using System.Collections;
+	using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -74,14 +74,12 @@ public class CounterMovement : MonoBehaviour
 			NumberDoublesRolled++;
 			if (NumberDoublesRolled == 3) {
 				StartCoroutine(sendPlayerToJail());
-				EndOfTurnActions.decideAction();
-				GameController.currentPlayer++;
 			}
-		} else {
-			EndOfTurnActions.decideAction();
-			GameController.currentPlayer++;
+		} else {;
 			NumberDoublesRolled = 0;
 		}
+		EndOfTurnActions.decideAction();
+		GameController.currentPlayer++;
 
 		if (GameController.currentPlayer == (GameController.humanPlayers)){
 			GameController.currentPlayer = 0;

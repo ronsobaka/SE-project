@@ -36,8 +36,6 @@ public class PopUps : MonoBehaviour  {
 
     public void popUpCard(string propertyType) {
 
-        Debug.Log(propertyType);
-
         if (cardDictionary.ContainsKey(propertyType)) {
             cardImage.sprite = cardDictionary[propertyType];
             setPropertyCardText();
@@ -57,11 +55,26 @@ public class PopUps : MonoBehaviour  {
         TextMeshProUGUI propertyCost = GameObject.FindGameObjectWithTag("PropertyCost").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI rentPrices = GameObject.FindGameObjectWithTag("RentPrices").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI constructionCost = GameObject.FindGameObjectWithTag("ConstructionCosts").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI stationAndUtilityPrices = GameObject.FindGameObjectWithTag("Station&Utility").GetComponent<TextMeshProUGUI>();
 
         propertyName.text = boardData[tileNumber, 1];
-        propertyCost.text = "Price: " + boardData[tileNumber, 5];
-        rentPrices.text = "Unimproved rent: £" + boardData[tileNumber, 6] + "\n1 House rent: £" + boardData[tileNumber, 7] + "\n2 House rent: £" + boardData[tileNumber, 8] + "\n3 House rent: £" + boardData[tileNumber, 9] + "\n4 House rent: £" + boardData[tileNumber, 10]+ "\nHotel rent: £" + boardData[tileNumber, 11];
-        constructionCost.text = "House cost £" + boardData[tileNumber, 12] + "\nHotel cost £" + boardData[tileNumber, 12] + " + 4 houses";
+        propertyCost.text = "Price: £" + boardData[tileNumber, 5];
+        //propertyCost.Transform.position.y = 35;
+        rentPrices.text = "";
+        constructionCost.text = "";
+
+        if (boardData[tileNumber,2] == "Station"){
+
+            stationAndUtilityPrices.text = "If 1 station is owned rent is £25\nIf 2 stations are owned rent is £50\nIf 3 stations are owned rent is £100\nIf 4 stations are owned rent is £200";
+            //propertyCost.transform.position.y = 10;
+
+
+        } else {
+            rentPrices.text = "Unimproved rent: £" + boardData[tileNumber, 6] + "\n1 House rent: £" + boardData[tileNumber, 7] + "\n2 House rent: £" + boardData[tileNumber, 8] + "\n3 House rent: £" + boardData[tileNumber, 9] + "\n4 House rent: £" + boardData[tileNumber, 10]+ "\nHotel rent: £" + boardData[tileNumber, 11];
+            constructionCost.text = "House cost £" + boardData[tileNumber, 12] + "\nHotel cost £" + boardData[tileNumber, 12] + " + 4 houses";  
+        }
+
+        
     }
 
     public void endTurn() {

@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameManager
+  - PropertyName
+  - RentPrices
+  - PropertyCost
+  - ConstructionCosts
+  - Station&Utility
   layers:
   - Default
   - TransparentFX
