@@ -32,7 +32,6 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < humanPlayers; i++) {
             playerCounters[i] = (GameObject)Instantiate(counterPrefab, startPositions[i], Quaternion.identity) as GameObject;
         }
-
     }
 
     void Update() {
@@ -44,7 +43,7 @@ public class GameController : MonoBehaviour
     void setupBalances() {
         bankBalance = 50000;
         playerBalances = new int[humanPlayers];
-        for (int i = 0; i < humanPlayers - 1; i++) {
+        for (int i = 0; i < humanPlayers; i++) {    
             playerBalances[i] = 1500;
         }
         bankBalance -= (humanPlayers * 1500);
@@ -59,4 +58,6 @@ public class GameController : MonoBehaviour
         startPositions[5] = new Vector3(16.75f, 0.9f, -18f);
         startPositions[0] = new Vector3(16.75f, 0.9f, -17f);
     }
+
+    
 }

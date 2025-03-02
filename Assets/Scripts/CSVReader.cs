@@ -21,7 +21,7 @@ public class CSVReader : MonoBehaviour {
             int rowCount = csvContent.Length;
             int colCount = csvContent[0].Split(",").Length;                 //Calculate row / column
 
-            array = new string[rowCount, colCount];         //Create empty 2D array
+            array = new string[rowCount, colCount + 2];         //Create empty 2D array
 
             for (int i = 0; i < rowCount; i++){
                 string[] values = csvContent[i].Split(",");

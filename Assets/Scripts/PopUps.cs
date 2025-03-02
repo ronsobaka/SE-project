@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PopUps : MonoBehaviour  {
+public class PopUps : MonoBehaviour {
     
     public GameObject popUpBox;
     public Button buyButton;
@@ -62,6 +62,7 @@ public class PopUps : MonoBehaviour  {
        
         rentPrices.text = "";
         constructionCost.text = "";
+        stationAndUtilityPrices.text = "";
 
         if (boardData[tileNumber,2] == "Station"){
 
@@ -74,15 +75,11 @@ public class PopUps : MonoBehaviour  {
             propertyCost.rectTransform.localPosition = new Vector3(0, 5, 0);
 
         } else {
+
             rentPrices.text = "Unimproved rent: £" + boardData[tileNumber, 6] + "\n1 House rent: £" + boardData[tileNumber, 7] + "\n2 House rent: £" + boardData[tileNumber, 8] + "\n3 House rent: £" + boardData[tileNumber, 9] + "\n4 House rent: £" + boardData[tileNumber, 10]+ "\nHotel rent: £" + boardData[tileNumber, 11];
             constructionCost.text = "House cost £" + boardData[tileNumber, 12] + "\nHotel cost £" + boardData[tileNumber, 12] + " + 4 houses";  
             propertyCost.rectTransform.localPosition = new Vector3(0, 35, 0);
+            
         }
-
-        
-    }
-
-    public void endTurn() {
-        GameController.turnComplete = true;
     }
 }
