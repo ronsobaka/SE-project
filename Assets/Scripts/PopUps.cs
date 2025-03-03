@@ -13,9 +13,10 @@ public class PopUps : MonoBehaviour {
     public Image cardImage;
     public Sprite[] cardSprites; 
     private Dictionary<string, Sprite> cardDictionary;
-    
+    public ChanceCards chanceCards;
 
     public void Start() {
+        
         
         cardDictionary = new Dictionary<string, Sprite> {
             { "Brown", cardSprites[0] },
@@ -30,18 +31,22 @@ public class PopUps : MonoBehaviour {
             { "Tesla Utility", cardSprites[9] },
             { "Edison Utility", cardSprites[10] }
         };
+
     }
 
 
 
     public void popUpCard(string propertyType) {
-
-        if (cardDictionary.ContainsKey(propertyType)) {
-            cardImage.sprite = cardDictionary[propertyType];
-            setPropertyCardText();
+        Debug.Log("popUpCard method called with propertyType: " + propertyType);
+        if (propertyType == "Pot Luck" || propertyType == "Opportunity Knocks") {
+        chanceCards.ShowChanceCard(propertyType);
+        } else if (cardDictionary.ContainsKey(propertyType)) {
+                cardImage.sprite = cardDictionary[propertyType];
+                setPropertyCardText();
         } else {      
-            Debug.LogWarning("Property type not found in dictionary: " + propertyType);
+                Debug.LogWarning("Property type not found in dictionary: " + propertyType);
         }
+
         buyButton.enabled = true;
         popUpBox.SetActive(true);
         animator.SetTrigger("pop");
