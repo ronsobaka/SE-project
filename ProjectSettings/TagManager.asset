@@ -10,7 +10,8 @@ TagManager:
   - PropertyCost
   - ConstructionCosts
   - Station&Utility
-  - CardText
+  - OpportunityText
+  - PotLuckText
   layers:
   - Default
   - TransparentFX

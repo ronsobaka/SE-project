@@ -6,14 +6,17 @@ using TMPro;
 
 public class PopUps : MonoBehaviour {
     
-    public GameObject popUpBox;
+    public GameObject propertyPopUpBox;
+    public GameObject opportunityPopUpBox;
+    public GameObject potLuckPopUpBox;
     public Button buyButton;
-    public Animator animator;
+    public Animator propertyAnimator;
+    public Animator opportunityAnimator;
+    public Animator potLuckAnimator;
     public GameObject textParentComponent;
     public Image cardImage;
     public Sprite[] cardSprites; 
     private Dictionary<string, Sprite> cardDictionary;
-    public ChanceCards chanceCards;
 
     public void Start() {
         
@@ -37,22 +40,38 @@ public class PopUps : MonoBehaviour {
 
 
     public void popUpCard(string propertyType) {
-        Debug.Log("popUpCard method called with propertyType: " + propertyType);
-        if (propertyType == "Pot Luck" || propertyType == "Opportunity Knocks") {
-        chanceCards.ShowChanceCard(propertyType);
+
+
+        if (propertyType == "Pot Luck"){
+
+            potLuckPopUpBox.SetActive(true);
+            potLuckAnimator.SetTrigger("pop");
+            setPotLuckCardText();
+            
+        } else if (propertyType == "Opportunity Knocks") {
+
+            opportunityPopUpBox.SetActive(true);
+            opportunityAnimator.SetTrigger("pop");
+            setOpportunityCardText();
+        
         } else if (cardDictionary.ContainsKey(propertyType)) {
-                cardImage.sprite = cardDictionary[propertyType];
-                setPropertyCardText();
+
+            cardImage.sprite = cardDictionary[propertyType];
+            setPropertyCardText();
+            buyButton.enabled = true;
+            propertyPopUpBox.SetActive(true);
+            propertyAnimator.SetTrigger("pop");
+
         } else {      
                 Debug.LogWarning("Property type not found in dictionary: " + propertyType);
         }
 
-        buyButton.enabled = true;
-        popUpBox.SetActive(true);
-        animator.SetTrigger("pop");
+        
+
     }
 
     void setPropertyCardText() {
+
         string[,] boardData = GameController.boardData;
         int tileNumber = GameController.playerPositions[GameController.currentPlayer];
 
@@ -86,5 +105,19 @@ public class PopUps : MonoBehaviour {
             propertyCost.rectTransform.localPosition = new Vector3(0, 35, 0);
             
         }
+    }
+
+    void setOpportunityCardText() {
+        string[,] cardData = GameController.cardData;
+
+        
+        TextMeshProUGUI OpportunityText = GameObject.FindGameObjectWithTag("OpportunityText").GetComponent<TextMeshProUGUI>();
+
+        
+    }
+    
+    void setPotLuckCardText() {
+        string[,] cardData = GameController.cardData;
+        
     }
 }

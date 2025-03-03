@@ -17,14 +17,15 @@ public class EndOfTurnActions : MonoBehaviour
         GameController.turnActionsTrigger = false;
         playerPositions = GameController.playerPositions;
         currentPlayer = GameController.currentPlayer;
-        string currentTileColour = GameController.boardData[playerPositions[currentPlayer], 2];  
+        string currentTileGroup = GameController.boardData[playerPositions[currentPlayer], 2];  
 
-        if (currentTileColour != ""){
-            if (GameController.boardData[playerPositions[currentPlayer], 13] != "null"){
-                payRent();
-            }
+        if (currentTileGroup != ""){
+            // if (GameController.boardData[playerPositions[currentPlayer], 13] != ""){
+                //payRent();
+            // }
             PopUps pop = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PopUps>();
-            pop.popUpCard(currentTileColour);
+            pop.popUpCard(currentTileGroup);
+            
             
         } else {
             GameController.turnComplete = true; //Temporary needs changeing for other tiles
@@ -38,7 +39,7 @@ public class EndOfTurnActions : MonoBehaviour
         GameController.turnComplete = true;
     }
 
-    public static void payRent() {
+    /*public static void payRent() {
         Debug.Log("called");
-    }
+    }*/
 }

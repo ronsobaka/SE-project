@@ -152,7 +152,7 @@ public class DiceRoll : MonoBehaviour {
 			doubleRolled = true;
 		}
 		diceTotal = dice1Result + dice2Result;
-		diceTotal = 7;
+		diceTotal = 2;
 		diceDetectTrigger = false;
 
 
