@@ -17,9 +17,12 @@ public class PopUps : MonoBehaviour {
     public Image cardImage;
     public Sprite[] cardSprites; 
     private Dictionary<string, Sprite> cardDictionary;
+    private int opportunityCardNumber;
+    private int potLuckCardNumber;
 
     public void Start() {
-        
+        potLuckCardNumber = 0;
+        opportunityCardNumber = 17;
         
         cardDictionary = new Dictionary<string, Sprite> {
             { "Brown", cardSprites[0] },
@@ -113,11 +116,24 @@ public class PopUps : MonoBehaviour {
         
         TextMeshProUGUI OpportunityText = GameObject.FindGameObjectWithTag("OpportunityText").GetComponent<TextMeshProUGUI>();
 
-        
+        OpportunityText.text = cardData[opportunityCardNumber, 0];
+
+        opportunityCardNumber++;
+        if (opportunityCardNumber == 33) {
+            opportunityCardNumber = 17;
+        }
     }
     
     void setPotLuckCardText() {
         string[,] cardData = GameController.cardData;
         
+        TextMeshProUGUI PotLuckText = GameObject.FindGameObjectWithTag("PotLuckText").GetComponent<TextMeshProUGUI>();
+        PotLuckText.text = cardData[potLuckCardNumber, 0];
+
+        potLuckCardNumber++;
+        if (potLuckCardNumber == 17) {
+            potLuckCardNumber = 0;
+        }
+
     }
 }
