@@ -93,4 +93,8 @@ public class GameController : MonoBehaviour
         startPositions[5] = new Vector3(16.75f, 0.9f, -18f);
         startPositions[0] = new Vector3(16.75f, 0.9f, -17f);
     }
+
+    public void setTurnComplete(bool givenBool) {
+        turnComplete = givenBool;
+    }
 }

@@ -50,6 +50,7 @@ public class PopUps : MonoBehaviour {
             potLuckPopUpBox.SetActive(true);
             potLuckAnimator.SetTrigger("pop");
             setPotLuckCardText();
+            StartCoroutine(potLuckCardTimeout());
             
         } else if (propertyType == "Opportunity Knocks") {
 
@@ -66,12 +67,16 @@ public class PopUps : MonoBehaviour {
             propertyAnimator.SetTrigger("pop");
 
         } else {      
-                Debug.LogWarning("Property type not found in dictionary: " + propertyType);
+            Debug.LogWarning("Property type not found in dictionary: " + propertyType);
         }
-
-        
-
     }
+
+    IEnumerator potLuckCardTimeout() {
+
+		yield return new WaitForSeconds(5f);
+		potLuckAnimator.SetTrigger("close");
+        GameController.turnComplete = true;
+	}
 
     void setPropertyCardText() {
 
