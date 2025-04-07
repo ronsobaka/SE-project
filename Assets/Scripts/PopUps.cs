@@ -56,6 +56,7 @@ public class PopUps : MonoBehaviour {
             opportunityPopUpBox.SetActive(true);
             opportunityAnimator.SetTrigger("pop");
             setOpportunityCardText();
+            StartCoroutine(opportunityCardTimeout());
         
         } else if (cardDictionary.ContainsKey(propertyType)) {
 
@@ -74,6 +75,13 @@ public class PopUps : MonoBehaviour {
 
 		yield return new WaitForSeconds(5f);
 		potLuckAnimator.SetTrigger("close");
+        GameController.turnComplete = true;
+	}
+
+    IEnumerator opportunityCardTimeout() {
+
+		yield return new WaitForSeconds(5f);
+		opportunityAnimator.SetTrigger("close");
         GameController.turnComplete = true;
 	}
 

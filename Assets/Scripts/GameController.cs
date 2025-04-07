@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour
 
     //Setters
 
-    public void setTurnComplete(bool givenBool) {
+    public static void setTurnComplete(bool givenBool) {
         turnComplete = givenBool;
     }
 

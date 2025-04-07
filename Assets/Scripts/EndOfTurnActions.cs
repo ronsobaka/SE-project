@@ -31,6 +31,7 @@ public class EndOfTurnActions : MonoBehaviour {
                 int tileOwner = int.Parse(boardData[currentPosition, 13]);
                 int rentAmount = int.Parse(boardData[currentPosition, 6]);
                 Banking.playerToPlayerTransfer(currentPlayer, tileOwner, rentAmount);
+                GameController.setTurnComplete(true);
 
             } else {   //not owned so can buy so show user options
 
@@ -49,6 +50,6 @@ public class EndOfTurnActions : MonoBehaviour {
     public void boughtProperty() {
         Banking.playetToBankTransfer(currentPlayer, int.Parse(boardData[currentPosition, 5]));
         boardData[currentPosition, 13] = currentPlayer.ToString();
-        GameController.turnComplete = true;
+        GameController.setTurnComplete(false);
     }
 }

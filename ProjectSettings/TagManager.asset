@@ -12,6 +12,8 @@ TagManager:
   - Station&Utility
   - OpportunityText
   - PotLuckText
+  - AuctionBidAndBidder
+  - AuctionTitle
   layers:
   - Default
   - TransparentFX
