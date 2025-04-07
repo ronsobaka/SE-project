@@ -12,7 +12,8 @@ public class DiceRoll : MonoBehaviour {
 	private Vector3 dice1Velocity;
 	private Vector3 dice2Velocity;
 	private bool diceDetectTrigger;
-	public static int diceTotal;	public static bool doubleRolled = false;
+	public static int diceTotal;	
+	public static bool doubleRolled = false;
 
 	// Use this for initialization
 	void Start () {
@@ -152,7 +153,7 @@ public class DiceRoll : MonoBehaviour {
 			doubleRolled = true;
 		}
 		diceTotal = dice1Result + dice2Result;
-		//diceTotal = 2;
+		//diceTotal = 6;
 		diceDetectTrigger = false;
 
 

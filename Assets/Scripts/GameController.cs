@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < humanPlayers; i++) {
             playerCounters[i] = (GameObject)Instantiate(counterPrefab, startPositions[i], Quaternion.identity) as GameObject;
         }
+
+        Banking.setUpBank();
     }
 
     void shuffleCards() {
@@ -92,5 +94,9 @@ public class GameController : MonoBehaviour
 
     public static int getHumanPlayers() {
         return humanPlayers;
+    }
+
+    public static string[,] getBoardData() {
+        return boardData;
     }
 }
