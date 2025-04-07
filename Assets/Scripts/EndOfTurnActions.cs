@@ -27,15 +27,16 @@ public class EndOfTurnActions : MonoBehaviour
             pop.popUpCard(currentTileGroup);
             
             
+            
         } else {
             GameController.turnComplete = true; //Temporary needs changeing for other tiles
         }
     }
 
     public void boughtProperty() {
-        GameController.playerBalances[currentPlayer] -= int.Parse(GameController.boardData[playerPositions[currentPlayer], 5]);
-        Debug.Log(GameController.playerBalances[currentPlayer]);
-        GameController.boardData[playerPositions[currentPlayer], 13] = currentPlayer.ToString();
+        //GameController.playerBalances[currentPlayer] -= int.Parse(GameController.boardData[playerPositions[currentPlayer], 5]);
+        //Debug.Log(GameController.playerBalances[currentPlayer]);
+        //GameController.boardData[playerPositions[currentPlayer], 13] = currentPlayer.ToString();
         GameController.turnComplete = true;
     }
 

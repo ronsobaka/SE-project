@@ -13,7 +13,6 @@ public class PopUps : MonoBehaviour {
     public Animator propertyAnimator;
     public Animator opportunityAnimator;
     public Animator potLuckAnimator;
-    public GameObject textParentComponent;
     public Image cardImage;
     public Sprite[] cardSprites; 
     private Dictionary<string, Sprite> cardDictionary;
@@ -61,9 +60,9 @@ public class PopUps : MonoBehaviour {
         } else if (cardDictionary.ContainsKey(propertyType)) {
 
             cardImage.sprite = cardDictionary[propertyType];
+            propertyPopUpBox.SetActive(true);
             setPropertyCardText();
             buyButton.enabled = true;
-            propertyPopUpBox.SetActive(true);
             propertyAnimator.SetTrigger("pop");
 
         } else {      

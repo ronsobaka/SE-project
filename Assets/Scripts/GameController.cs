@@ -13,8 +13,6 @@ public class GameController : MonoBehaviour
     public GameObject counterPrefab;
     public static int humanPlayers;
     public static bool turnComplete = true;
-    public static int[] playerBalances;
-    public static int bankBalance; 
     public static string[,] boardData;
     public static string[,] cardData;
     public static int[]  playerPositions;
@@ -23,7 +21,6 @@ public class GameController : MonoBehaviour
 
     void Start() {
         setStartPostitions();
-        setupBalances();
         shuffleCards();
         
        
@@ -75,15 +72,6 @@ public class GameController : MonoBehaviour
 		}
     }
 
-    void setupBalances() {
-        bankBalance = 50000;
-        playerBalances = new int[humanPlayers];
-        for (int i = 0; i < humanPlayers; i++) {    
-            playerBalances[i] = 1500;
-        }
-        bankBalance -= (humanPlayers * 1500);
-    }
-
     void setStartPostitions() {
         startPositions = new Vector3[6];
         startPositions[1] = new Vector3(15.5f, 0.9f, -19f);
@@ -94,7 +82,15 @@ public class GameController : MonoBehaviour
         startPositions[0] = new Vector3(16.75f, 0.9f, -17f);
     }
 
+    //Setters
+
     public void setTurnComplete(bool givenBool) {
         turnComplete = givenBool;
+    }
+
+    //Getters
+
+    public static int getHumanPlayers() {
+        return humanPlayers;
     }
 }

@@ -21002,7 +21002,7 @@ MonoBehaviour:
   propertyAnimator: {fileID: 1663677215}
   opportunityAnimator: {fileID: 411426987}
   potLuckAnimator: {fileID: 1754161150}
-  textParentComponent: {fileID: 0}
+  textParentComponent: {fileID: 2073718692}
   cardImage: {fileID: 636439028}
   cardSprites:
   - {fileID: 21300000, guid: 333bc2f749a8d214ba1baadcb3e59a5a, type: 3}
@@ -21082,8 +21082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76073dfa26b933a49b8775b4ededa726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buyButton: {fileID: 0}
-  auctionButton: {fileID: 0}
+  buyButton: {fileID: 1972363484}
+  auctionButton: {fileID: 1171083617}
 --- !u!95 &2049480699
 Animator:
   serializedVersion: 5
