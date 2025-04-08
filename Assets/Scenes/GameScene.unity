@@ -35272,6 +35272,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d1ebd89abb9129647a77142da5a5ebba, type: 3}
   - {fileID: 21300000, guid: 8e272c1d55a003d469e35202d3b7c520, type: 3}
   - {fileID: 21300000, guid: cd7093ac0f427424580ce6a000fd1fe0, type: 3}
+  playerColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2049480694
 MonoBehaviour:
   m_ObjectHideFlags: 0

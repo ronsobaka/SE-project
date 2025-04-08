@@ -140,4 +140,31 @@ public class PopUps : MonoBehaviour {
         }
 
     }
+
+    public class PlayPropertyUI {
+        public Image[] propertyImages = new Image[28];
+    }
+
+    public PlayPropertyUI[] allPlayerPropertiesUIs = new PlayPropertyUI[6]; 
+    public Color[] playerColors = new Color[6];
+
+    public void SetPropertyOwned(int tileNumber, int playerPosition, string propertyType) {
+            
+        
+        if (tileNumber < 0 || tileNumber >= 28 || playerPosition < 0 || playerPosition >= allPlayerPropertiesUIs.Length)
+            return;
+
+            
+            Image img = allPlayerPropertiesUIs[playerPosition].propertyImages[tileNumber];
+
+        
+        if (img != null) {
+            
+            if (cardDictionary.ContainsKey(propertyType)) {
+                img.sprite = cardDictionary[propertyType];
+                img.enabled = true;
+            }
+        }
+    }
+
 }
