@@ -8,6 +8,9 @@ public class Auction : MonoBehaviour {
 
     public GameObject auctionBox;
     public Animator auctionAnimator;
+    public Button pound1;
+    public Button pound10;
+    public Button pound100;
     private static int highestBid;
     private static int highestBidder;
     private static int numberofPlayers;
@@ -21,6 +24,7 @@ public class Auction : MonoBehaviour {
 
         auctionBox.SetActive(true);
         auctionAnimator.SetTrigger("open");
+        setButtonActivation(true);
         
         //initialize variables
 
@@ -49,7 +53,7 @@ public class Auction : MonoBehaviour {
     }
 
     public static void removeBidder() {
-        if (currentBidder = biddersRemaining.Count) {
+        if (currentBidder >= biddersRemaining.Count) {
             currentBidder = 0;
         }
         biddersRemaining.RemoveAt(currentBidder);
@@ -94,7 +98,14 @@ public class Auction : MonoBehaviour {
     }
 
     private static void endBidding(){
+        Debug.Log("Got here with no errors");
+        setButtonActivation(false);
+    }
 
+    private static void setButtonActivation(bool trueFalse) {
+        //pound1.enabled = trueFalse;
+        //pound10.enabled = trueFalse;
+        //pound100.enabled = trueFalse;
     }
 
     private static void updateUI() {

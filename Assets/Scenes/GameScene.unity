@@ -8652,7 +8652,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa33d97e781d73b45969f6db448098a7, type: 2}
+  - {fileID: 2100000, guid: 0329068b9b1ed504fbb10c0733ca244c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8690,13 +8690,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506363234}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &511658842
 GameObject:
   m_ObjectHideFlags: 0
@@ -16102,14 +16102,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890794922}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -12.5, y: -0.3, z: -23}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -12.5, y: -0.3, z: -5.76}
   m_LocalScale: {x: 7.784863, y: 0.65332, z: 4.281819}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1010433919}
   m_Father: {fileID: 2026019027}
-  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &890794924
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29020,7 +29020,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 59}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1585937114
 MonoBehaviour:
@@ -30852,14 +30852,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723441876}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 4, y: -0.3, z: -6}
   m_LocalScale: {x: 7.784863, y: 0.65332, z: 4.281819}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 173125445}
   m_Father: {fileID: 2026019027}
-  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1723441878
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36575,6 +36575,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   auctionBox: {fileID: 557873246}
   auctionAnimator: {fileID: 557873248}
+  pound1: {fileID: 1442713782}
+  pound10: {fileID: 934431122}
+  pound100: {fileID: 391628028}
 --- !u!1 &2063172954
 GameObject:
   m_ObjectHideFlags: 0
@@ -36821,7 +36824,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 98}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2069648979
 MonoBehaviour:
