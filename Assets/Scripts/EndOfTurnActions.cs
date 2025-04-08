@@ -52,4 +52,8 @@ public class EndOfTurnActions : MonoBehaviour {
         boardData[currentPosition, 13] = currentPlayer.ToString();
         GameController.setTurnComplete(false);
     }
+
+    public static int getCurrentPosition() {
+        return currentPosition;
+    }
 }

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Banking : GameController {
+public class Banking : MonoBehaviour {
 
     private static int[] playerBalances;
     private static int bankBalance;
+    private static int freeParkingBalance;
    
    public TextMeshProUGUI[] moneyTexts;
 
     public static void setUpBank() {
 
-        int humanPlayers = getHumanPlayers();
+        int humanPlayers = GameController.getHumanPlayers();
 
         bankBalance = 50000;
 
@@ -53,6 +54,18 @@ public class Banking : GameController {
         }
     }
 
+    public static void bankToPlayerTransfer(int player, int amount) {
+        bankBalance -= amount;
+        playerBalances[player] += amount;
+
+        logBalances();
+
+        Banking bankingInstance = FindObjectOfType<Banking>();
+        if (bankingInstance != null) {
+            bankingInstance.UpdateMoneyUI();
+        }
+    }
+
 
     public static void logBalances() {
         for (int i = 0; i < playerBalances.Length - 1; i++) {
@@ -75,6 +88,4 @@ public class Banking : GameController {
             }
         }
     }
-
-    //public static void playetToBankTransfer()
 }

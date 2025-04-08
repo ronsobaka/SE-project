@@ -103,4 +103,8 @@ public class GameController : MonoBehaviour
     public static string[,] getBoardData() {
         return boardData;
     }
+
+    public static int getCurrentPlayer() {
+        return currentPlayer;
+    }
 }

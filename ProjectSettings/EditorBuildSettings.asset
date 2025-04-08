@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 806c2ac685b2f964da1474c4a44c6848
+  - enabled: 1
+    path: Assets/SkySeries Freebie/ExampleScenes/DayInTheClouds.unity
+    guid: 2634e102100bcf64ca81587c175efa45
   m_configObjects: {}
