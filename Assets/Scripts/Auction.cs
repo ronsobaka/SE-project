@@ -13,11 +13,13 @@ public class Auction : MonoBehaviour {
     public Button pound100;
     private static int highestBid;
     private static int highestBidder;
-    private static int numberofPlayers;
+    public static int numberofPlayers;
     private static List<int> biddersRemaining;
     private static int currentBidder;
     private static int nextBidder;
     private static TextMeshProUGUI bidAndBidderText;
+    public TextMeshProUGUI surroundingText;
+    public TextMeshProUGUI title;
 
     
     public void startAuction() {
@@ -31,15 +33,22 @@ public class Auction : MonoBehaviour {
         highestBid = 0;
         highestBidder = GameController.getCurrentPlayer();
         numberofPlayers = GameController.getHumanPlayers();
-        currentBidder = 1;
-        nextBidder = 2;
+
+        currentBidder = highestBidder - 1;
+
+        if (currentBidder == numberofPlayers - 2){
+            nextBidder = 0;
+        } else {
+            nextBidder = currentBidder + 1;
+        }
+        
 
         biddersRemaining = new List<int>();
         for (int i = 1; i <= numberofPlayers; i++) {
             biddersRemaining.Add(i);
         }
 
-        TextMeshProUGUI title = GameObject.FindGameObjectWithTag("AuctionTitle").GetComponent<TextMeshProUGUI>();
+        
         title.text = "Auction for " + GameController.getBoardData()[EndOfTurnActions.getCurrentPosition(), 1];
 
         bidAndBidderText = GameObject.FindGameObjectWithTag("AuctionBidAndBidder").GetComponent<TextMeshProUGUI>();
@@ -49,67 +58,62 @@ public class Auction : MonoBehaviour {
     public static void makeBid(int bidAmount) {
         highestBid += bidAmount;
         getNextBidder();
-        updateUI();
     }
 
-    public static void removeBidder() {
-        if (currentBidder >= biddersRemaining.Count) {
-            currentBidder = 0;
-        }
+    public void removeBidder() {
         biddersRemaining.RemoveAt(currentBidder);
-
-        foreach (int number in biddersRemaining)
-        {
-            Debug.Log(number);  // Print each element
-        }
-
-        if (biddersRemaining.Count == 1) {
-            endBidding();
-        }
-
-        if (nextBidder >= (biddersRemaining.Count)){
-            nextBidder = 1;
-        } else {
-            nextBidder++;
-        }
-
-        updateUI();
-
-        if (currentBidder >= (biddersRemaining.Count)) {
-            currentBidder = 1;
-        } else  {
-            currentBidder++;
-        }
     }
 
     private static void getNextBidder() {
-        if (currentBidder >= (biddersRemaining.Count)) {
-            currentBidder = 1;
-        } else  {
-            currentBidder++;
+
+        if (biddersRemaining.Count == 1) {
+            endBidding();
+            return;
         }
         
-        if (nextBidder >= (biddersRemaining.Count)){
-            nextBidder = 1;
+        if (biddersRemaining.Contains(currentBidder + 1)) {
         } else {
-            nextBidder++;
+
         }
 
+        
+
+        
+
     }
 
-    private static void endBidding(){
+    private void endBidding(){
         Debug.Log("Got here with no errors");
         setButtonActivation(false);
+
+        surroundingText.text = "player " + biddersRemaining[0].ToString() + " You have won the bidding!!\nYou now own " + title.text + " for £" + highestBid;
+        bidAndBidderText.text = "";
+
+        StartCoroutine(auctionTimeout());
     }
 
-    private static void setButtonActivation(bool trueFalse) {
-        //pound1.enabled = trueFalse;
-        //pound10.enabled = trueFalse;
-        //pound100.enabled = trueFalse;
+    private void setButtonActivation(bool trueFalse) {
+        pound1.enabled = trueFalse;
+        pound10.enabled = trueFalse;
+        pound100.enabled = trueFalse;
     }
+
+    IEnumerator auctionTimeout() {
+
+		yield return new WaitForSeconds(5f);
+		auctionAnimator.SetTrigger("close");
+        GameController.setTurnComplete(true);
+	}
+
 
     private static void updateUI() {
-        bidAndBidderText.text = "£" + highestBid + "\n\n\nPlayer " + biddersRemaining[currentBidder - 1] + "\n\n\nPlayer " + biddersRemaining[nextBidder - 1];
+        Debug.Log(currentBidder + " " + nextBidder);
+
+        foreach(int i in biddersRemaining) {
+            Debug.Log(i);
+        }
+        
+        bidAndBidderText.text = "£" + highestBid + "\n\n\nPlayer " + biddersRemaining[currentBidder] + "\n\n\nPlayer " + biddersRemaining[nextBidder];
     }
 
 }
