@@ -43,7 +43,7 @@ public class Banking : MonoBehaviour {
         }
     }
 
-    public static void playetToBankTransfer(int player, int amount) {
+    public static void playerToBankTransfer(int player, int amount) {
         bankBalance += amount;
         playerBalances[player] -= amount;
         logBalances();

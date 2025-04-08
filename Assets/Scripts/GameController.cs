@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameController : MonoBehaviour
@@ -19,7 +20,6 @@ public class GameController : MonoBehaviour
     public static bool turnActionsTrigger = false;
     public GameObject[] playerUIImages;
     
-
     void Start() {
         setStartPostitions();
         shuffleCards();
@@ -107,4 +107,5 @@ public class GameController : MonoBehaviour
     public static int getCurrentPlayer() {
         return currentPlayer;
     }
+
 }

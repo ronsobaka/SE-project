@@ -48,9 +48,10 @@ public class EndOfTurnActions : MonoBehaviour {
     }
 
     public void boughtProperty() {
-        Banking.playetToBankTransfer(currentPlayer, int.Parse(boardData[currentPosition, 5]));
+        Banking.playerToBankTransfer(currentPlayer, int.Parse(boardData[currentPosition, 5]));
         boardData[currentPosition, 13] = currentPlayer.ToString();
         GameController.setTurnComplete(false);
+
     }
 
     public static int getCurrentPosition() {

@@ -61,30 +61,62 @@ public class Auction : MonoBehaviour {
     }
 
     public void removeBidder() {
-        biddersRemaining.RemoveAt(currentBidder);
-    }
+        if (biddersRemaining.Count <= 1) {
+            return;
+        }
 
-    private static void getNextBidder() {
+        biddersRemaining.RemoveAt(nextBidder);
+
+        if (nextBidder < currentBidder) {
+            currentBidder--;
+        }
+
+        if (currentBidder >= biddersRemaining.Count) {
+            currentBidder = 0;
+        }
+
+        if (currentBidder + 1 >= biddersRemaining.Count) {
+            nextBidder = 0;
+        } else {
+            nextBidder = currentBidder + 1;
+        }
 
         if (biddersRemaining.Count == 1) {
             endBidding();
             return;
         }
-        
-        if (biddersRemaining.Contains(currentBidder + 1)) {
-        } else {
 
+        updateUI();
+    }
+
+    private static void getNextBidder() {
+        
+        highestBidder = biddersRemaining[currentBidder];
+        currentBidder++;
+
+        if (currentBidder >= biddersRemaining.Count) {
+            currentBidder = 0;
         }
 
-        
+        if (biddersRemaining.Count == 1) {
+            GameObject.FindObjectOfType<Auction>().endBidding();
+            return;
+        }
 
-        
+        nextBidder = (currentBidder + 1) % biddersRemaining.Count;
+
+        updateUI();
 
     }
 
     private void endBidding(){
         Debug.Log("Got here with no errors");
         setButtonActivation(false);
+
+        int winnerPlayerNumber = biddersRemaining[0];
+        int winnerPlayerIndex = winnerPlayerNumber - 1;
+
+        Banking.playerToBankTransfer(winnerPlayerIndex, highestBid);
 
         surroundingText.text = "player " + biddersRemaining[0].ToString() + " You have won the bidding!!\nYou now own " + title.text + " for £" + highestBid;
         bidAndBidderText.text = "";

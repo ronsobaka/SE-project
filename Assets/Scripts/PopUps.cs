@@ -15,7 +15,7 @@ public class PopUps : MonoBehaviour {
     public Animator potLuckAnimator;
     public Image cardImage;
     public Sprite[] cardSprites; 
-    private Dictionary<string, Sprite> cardDictionary;
+    public Dictionary<string, Sprite> cardDictionary;
     private int opportunityCardNumber;
     private int potLuckCardNumber;
 
