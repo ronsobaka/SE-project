@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Banking : GameController {
 
     private static int[] playerBalances;
     private static int bankBalance;
    
+   public TextMeshProUGUI[] moneyTexts;
 
     void Start() {
 
@@ -20,6 +22,8 @@ public class Banking : GameController {
         }
 
         bankBalance -= (humanPlayers * 1500);
+
+        UpdateMoneyUI();
         
     }
 
@@ -27,6 +31,27 @@ public class Banking : GameController {
     public static void playerToPlayerTransfer(int player1, int player2, int amount) {
         playerBalances[player1] -= amount;
         playerBalances[player2] += amount;
+
+        Banking bankingInstance = FindObjectOfType<Banking>();
+        if (bankingInstance != null) {
+            bankingInstance.UpdateMoneyUI();
+        }
+    }
+
+        public static int GetPlayerBalance(int playerIndex)
+    {
+        return playerBalances[playerIndex];
+    }
+
+    private void UpdateMoneyUI() {
+
+        for (int j = 0; j < moneyTexts.Length; j++)
+        {
+            if (j < playerBalances.Length && moneyTexts[j] != null)
+            {
+                moneyTexts[j].text = "£" + playerBalances[j].ToString();
+            }
+        }
     }
 
     //public static void playetToBankTransfer()

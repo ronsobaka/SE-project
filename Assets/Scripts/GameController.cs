@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public static string[,] cardData;
     public static int[]  playerPositions;
     public static bool turnActionsTrigger = false;
+    public GameObject[] playerUIImages;
     
 
     void Start() {
@@ -30,7 +31,11 @@ public class GameController : MonoBehaviour
         currentPlayer = 0;
         for (int i = 0; i < humanPlayers; i++) {
             playerCounters[i] = (GameObject)Instantiate(counterPrefab, startPositions[i], Quaternion.identity) as GameObject;
+
+        for (int j = 0; j < playerUIImages.Length; j++) {
+            playerUIImages[j].SetActive(j < humanPlayers);
         }
+    }
     }
 
     void shuffleCards() {
