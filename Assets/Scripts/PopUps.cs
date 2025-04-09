@@ -34,7 +34,8 @@ public class PopUps : MonoBehaviour {
             { "Deep blue", cardSprites[7] },
             { "Station", cardSprites[8] },
             { "Tesla Utility", cardSprites[9] },
-            { "Edison Utility", cardSprites[10] }
+            { "Edison Utility", cardSprites[10] },
+            { "Gray", cardSprites[11] }
         };
 
     }
@@ -151,6 +152,5 @@ public class PopUps : MonoBehaviour {
 
     public static void setSprite(string group, Image img) {
         img.sprite = cardDictionary[group];
-        Debug.Log("Set sprite");
     }
 }

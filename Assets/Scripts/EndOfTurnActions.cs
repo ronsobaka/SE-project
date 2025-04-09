@@ -11,26 +11,22 @@ public class EndOfTurnActions : MonoBehaviour {
     public Button auctionButton;
     public static string[,] boardData;
     public static int currentPosition;
+    public static GameObject player;
     public static GameObject[] playerObjects;
 
+    public static void decideAction() {
 
-    public static void initializeVariables() {
         GameController.turnActionsTrigger = false;
         playerPositions = GameController.playerPositions;
         currentPlayer = GameController.currentPlayer;
         currentPosition = playerPositions[currentPlayer];
         boardData = GameController.getBoardData();
+        playerObjects = new GameObject[GameController.humanPlayers + 1];
         
-        for (int i = 0; i < GameController.humanPlayers; i++){
-            playerObjects[i] = GameObject.FindGameObjectWithTag($"Player{i}");
+        for (int i = 0; i < playerObjects.Length - 1; i++) {
+            player = GameObject.FindGameObjectWithTag($"Player{i+1}");
+            playerObjects[i] = player;
         }
-        
-        
-    }
-
-    public static void decideAction() {
-
-        
 
         string currentTileGroup = boardData[currentPosition, 2];
 
@@ -81,8 +77,17 @@ public class EndOfTurnActions : MonoBehaviour {
 
     public static void updateUICards() {
         string propertyName = boardData[currentPosition, 1];
-        string propertyGroup = boardData[currentPosition, 2];
-        //PopUps.setSprite(propertyGroup, player1.transform.Find(propertyName).GetComponent<Image>());
+        string propertyGroup;
+
+        for (int i = 0; i < playerObjects.Length - 1; i++) {
+            if (i == currentPlayer) {
+                propertyGroup = boardData[currentPosition, 2];
+            } else {
+                propertyGroup = "Gray";
+            }
+            PopUps.setSprite(propertyGroup, playerObjects[i].transform.Find(propertyName).GetComponent<Image>());
+        }
+        
 
     }
 }
