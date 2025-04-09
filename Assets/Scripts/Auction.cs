@@ -55,7 +55,7 @@ public class Auction : MonoBehaviour {
         updateUI();
     }
 
-    public static void makeBid(int bidAmount) {
+    public void makeBid(int bidAmount) {
         highestBid += bidAmount;
         getNextBidder();
     }
@@ -89,7 +89,7 @@ public class Auction : MonoBehaviour {
         updateUI();
     }
 
-    private static void getNextBidder() {
+    private void getNextBidder() {
         
         highestBidder = biddersRemaining[currentBidder];
         currentBidder++;
@@ -113,10 +113,7 @@ public class Auction : MonoBehaviour {
         Debug.Log("Got here with no errors");
         setButtonActivation(false);
 
-        int winnerPlayerNumber = biddersRemaining[0];
-        int winnerPlayerIndex = winnerPlayerNumber - 1;
-
-        Banking.playerToBankTransfer(winnerPlayerIndex, highestBid);
+        EndOfTurnActions.auctionBuyProperty(biddersRemaining[0] - 1);
 
         surroundingText.text = "player " + biddersRemaining[0].ToString() + " You have won the bidding!!\nYou now own " + title.text + " for £" + highestBid;
         bidAndBidderText.text = "";
@@ -139,13 +136,9 @@ public class Auction : MonoBehaviour {
 
 
     private static void updateUI() {
-        Debug.Log(currentBidder + " " + nextBidder);
 
-        foreach(int i in biddersRemaining) {
-            Debug.Log(i);
-        }
-        
         bidAndBidderText.text = "£" + highestBid + "\n\n\nPlayer " + biddersRemaining[currentBidder] + "\n\n\nPlayer " + biddersRemaining[nextBidder];
+    
     }
 
 }

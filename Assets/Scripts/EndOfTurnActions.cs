@@ -11,15 +11,26 @@ public class EndOfTurnActions : MonoBehaviour {
     public Button auctionButton;
     public static string[,] boardData;
     public static int currentPosition;
+    public static GameObject[] playerObjects;
 
 
-    public static void decideAction() {
-
+    public static void initializeVariables() {
         GameController.turnActionsTrigger = false;
         playerPositions = GameController.playerPositions;
         currentPlayer = GameController.currentPlayer;
         currentPosition = playerPositions[currentPlayer];
         boardData = GameController.getBoardData();
+        
+        for (int i = 0; i < GameController.humanPlayers; i++){
+            playerObjects[i] = GameObject.FindGameObjectWithTag($"Player{i}");
+        }
+        
+        
+    }
+
+    public static void decideAction() {
+
+        
 
         string currentTileGroup = boardData[currentPosition, 2];
 
@@ -37,7 +48,6 @@ public class EndOfTurnActions : MonoBehaviour {
 
                 PopUps pop = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PopUps>();
                 pop.popUpCard(currentTileGroup);
-
             }
 
             
@@ -47,14 +57,32 @@ public class EndOfTurnActions : MonoBehaviour {
         }
     }
 
-    public void boughtProperty() {
+    public static void buyProperty() {
         Banking.playerToBankTransfer(currentPlayer, int.Parse(boardData[currentPosition, 5]));
         boardData[currentPosition, 13] = currentPlayer.ToString();
-        GameController.setTurnComplete(false);
+        updateUICards();
+        GameController.setTurnComplete(true);
+    }
 
+    public static void auctionBuyProperty(int player) {
+        int temp = currentPlayer;
+        currentPlayer = player;
+        buyProperty();
+        currentPlayer = temp;
     }
 
     public static int getCurrentPosition() {
         return currentPosition;
+    }
+
+    public void setCurrentPlayer(int gPlayer) {
+        currentPlayer = gPlayer;
+    }
+
+    public static void updateUICards() {
+        string propertyName = boardData[currentPosition, 1];
+        string propertyGroup = boardData[currentPosition, 2];
+        //PopUps.setSprite(propertyGroup, player1.transform.Find(propertyName).GetComponent<Image>());
+
     }
 }

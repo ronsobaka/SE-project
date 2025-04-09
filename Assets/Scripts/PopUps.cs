@@ -15,7 +15,7 @@ public class PopUps : MonoBehaviour {
     public Animator potLuckAnimator;
     public Image cardImage;
     public Sprite[] cardSprites; 
-    public Dictionary<string, Sprite> cardDictionary;
+    public static Dictionary<string, Sprite> cardDictionary;
     private int opportunityCardNumber;
     private int potLuckCardNumber;
 
@@ -147,5 +147,10 @@ public class PopUps : MonoBehaviour {
             potLuckCardNumber = 0;
         }
 
+    }
+
+    public static void setSprite(string group, Image img) {
+        img.sprite = cardDictionary[group];
+        Debug.Log("Set sprite");
     }
 }

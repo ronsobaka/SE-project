@@ -88,6 +88,11 @@ public class GameController : MonoBehaviour
         startPositions[0] = new Vector3(16.75f, 0.9f, -17f);
     }
 
+    public static void buyProperty(int tileNumber, int player, int amount) {
+        boardData[tileNumber, 13] = player.ToString();
+        Banking.playerToBankTransfer(player, amount);
+    }
+
     //Setters
 
     public static void setTurnComplete(bool givenBool) {

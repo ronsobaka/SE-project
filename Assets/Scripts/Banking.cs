@@ -35,7 +35,6 @@ public class Banking : MonoBehaviour {
     public static void playerToPlayerTransfer(int player1, int player2, int amount) {
         playerBalances[player1] -= amount;
         playerBalances[player2] += amount;
-        logBalances();
 
         Banking bankingInstance = FindObjectOfType<Banking>();
         if (bankingInstance != null) {
@@ -46,7 +45,6 @@ public class Banking : MonoBehaviour {
     public static void playerToBankTransfer(int player, int amount) {
         bankBalance += amount;
         playerBalances[player] -= amount;
-        logBalances();
 
         Banking bankingInstance = FindObjectOfType<Banking>();
         if (bankingInstance != null) {
@@ -58,21 +56,11 @@ public class Banking : MonoBehaviour {
         bankBalance -= amount;
         playerBalances[player] += amount;
 
-        logBalances();
-
         Banking bankingInstance = FindObjectOfType<Banking>();
         if (bankingInstance != null) {
             bankingInstance.UpdateMoneyUI();
         }
     }
-
-
-    public static void logBalances() {
-        for (int i = 0; i < playerBalances.Length - 1; i++) {
-            Debug.Log("Player: " + i + " has " + playerBalances[i]);
-        }
-    }
-
 
     public static int GetPlayerBalance(int playerIndex){
         return playerBalances[playerIndex];
