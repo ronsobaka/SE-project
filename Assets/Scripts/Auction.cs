@@ -64,6 +64,7 @@ public class Auction : MonoBehaviour {
             getNextBidder();
         } else {
             errorText.text = "You cannot afford this bid.";
+            StartCoroutine(errorMessageBuffer());
             removeBidder();
         }
     }

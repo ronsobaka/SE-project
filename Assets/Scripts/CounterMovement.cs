@@ -34,11 +34,13 @@ public class CounterMovement : MonoBehaviour
 
 	IEnumerator MoveCounterCoroutine(int movesToMake) {
 		
+
     	for (int i = 0; i < movesToMake; i++) {
 
         	UpdateMoveDistance();
             endPosition += moveDistance;
-            moves++;
+
+			moves++;
 			
 			
 
@@ -102,6 +104,13 @@ public class CounterMovement : MonoBehaviour
 	}
 
 	void UpdateMoveDistance() {
+
+		if (moves == 0) {
+			Banking.bankToPlayerTransfer(GameController.currentPlayer, 200);
+		} else if (moves == 20) {
+			Banking.takeFreeParking(EndOfTurnActions.getCurrentPlayer);
+		}
+
 		if (moves >= 0 && moves <= 8) {
 
 			moveDistance = new Vector3(-3.2f,0,0);

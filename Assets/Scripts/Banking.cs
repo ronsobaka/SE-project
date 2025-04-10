@@ -80,4 +80,25 @@ public class Banking : MonoBehaviour {
     public static bool checkBalance(int player, int amount) {
         return (playerBalances[player] >= amount);
     }
+
+    public static void addMoneyToFreeParking(int player, int amount) {
+        playerBalances[player] -= amount;
+        freeParkingBalance += amount;
+
+        Banking bankingInstance = FindObjectOfType<Banking>();
+        if (bankingInstance != null) {
+            bankingInstance.UpdateMoneyUI();
+        }
+    }
+
+    public static void takeFreeParking(int player) {
+        playerBalances[player] += freeParkingBalance;
+        freeParkingBalance = 0;
+
+        Banking bankingInstance = FindObjectOfType<Banking>();
+        if (bankingInstance != null) {
+            bankingInstance.UpdateMoneyUI();
+        }
+    }
+
 }

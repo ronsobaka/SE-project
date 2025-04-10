@@ -10,6 +10,7 @@ public class PopUps : MonoBehaviour {
     public GameObject opportunityPopUpBox;
     public GameObject potLuckPopUpBox;
     public Button buyButton;
+    public Button auctionButton;
     public Animator propertyAnimator;
     public Animator opportunityAnimator;
     public Animator potLuckAnimator;
@@ -18,6 +19,8 @@ public class PopUps : MonoBehaviour {
     public static Dictionary<string, Sprite> cardDictionary;
     private int opportunityCardNumber;
     private int potLuckCardNumber;
+    private int currentPlayer;
+    private int currentPosition;
 
     public void Start() {
         potLuckCardNumber = 0;
@@ -35,7 +38,8 @@ public class PopUps : MonoBehaviour {
             { "Station", cardSprites[8] },
             { "Tesla Utility", cardSprites[9] },
             { "Edison Utility", cardSprites[10] },
-            { "Gray", cardSprites[11] }
+            { "Gray", cardSprites[11] },
+            { "tax", cardSprites[12] }
         };
 
     }
@@ -44,7 +48,7 @@ public class PopUps : MonoBehaviour {
 
     public void popUpCard(string propertyType) {
 
-
+        currentPlayer = GameController.getCurrentPlayer
         if (propertyType == "Pot Luck"){
 
             potLuckPopUpBox.SetActive(true);
@@ -58,6 +62,41 @@ public class PopUps : MonoBehaviour {
             opportunityAnimator.SetTrigger("pop");
             setOpportunityCardText();
             StartCoroutine(opportunityCardTimeout());
+            Banking.opportunityCardActions(currentPlayer, opportunityCardNumber);
+
+        } else if (propertyType == "tax") {
+
+
+            cardImage.sprite = cardDictionary[propertyType];
+            propertyPopUpBox.SetActive(true);
+
+            int currentPos = EndOfTurnActions.getCurrentPosition();
+            TextMeshProUGUI propertyName = GameObject.FindGameObjectWithTag("PropertyName").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI propertyCost = GameObject.FindGameObjectWithTag("PropertyCost").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI rentPrices = GameObject.FindGameObjectWithTag("RentPrices").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI constructionCost = GameObject.FindGameObjectWithTag("ConstructionCosts").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI stationAndUtilityPrices = GameObject.FindGameObjectWithTag("Station&Utility").GetComponent<TextMeshProUGUI>();
+
+            rentPrices.text = "";
+            constructionCost.text = "";
+            stationAndUtilityPrices.text =  "";
+
+            buyButton.gameObject.SetActive(false);
+            auctionButton.gameObject.SetActive(false);
+
+            if (currentPos == 4) {
+                propertyName.text = "Income Tax";
+                propertyCost.text  = "You Have to pay £200";
+                Banking.playerToBankTransfer(currentPlayer, 200);
+                
+            } else {
+                propertyName.text = "Super Tax";
+                propertyCost.text  = "You Have to pay £100";
+                Banking.playerToBankTransfer(currentPlayer, 100);
+            }
+
+            propertyAnimator.SetTrigger("pop");
+            StartCoroutine(taxCardTimeout());
         
         } else if (cardDictionary.ContainsKey(propertyType)) {
 
@@ -66,6 +105,7 @@ public class PopUps : MonoBehaviour {
             setPropertyCardText();
             buyButton.enabled = true;
             propertyAnimator.SetTrigger("pop");
+
 
         } else {      
             Debug.LogWarning("Property type not found in dictionary: " + propertyType);
@@ -83,6 +123,13 @@ public class PopUps : MonoBehaviour {
 
 		yield return new WaitForSeconds(5f);
 		opportunityAnimator.SetTrigger("close");
+        GameController.turnComplete = true;
+	}
+
+    IEnumerator taxCardTimeout() {
+
+		yield return new WaitForSeconds(2.5f);
+		propertyAnimator.SetTrigger("close");
         GameController.turnComplete = true;
 	}
 
@@ -135,6 +182,53 @@ public class PopUps : MonoBehaviour {
         if (opportunityCardNumber == 33) {
             opportunityCardNumber = 17;
         }
+
+        if (action.StartsWith("Bank pays player")) {
+            int startIndex = action.IndexOf("£");
+            startIndex++;
+            int endIndex = actiion.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            Banking.bankToPlayerTransfer(currentPlayer, amount);
+
+        } else if (currentPosition == 19) {
+            //go to turing heights
+        } else if (currentPosition == 20) {
+            //go to Xin Gardens
+        } else if (currentPosition == 21) {
+            //put £15 on free parking
+
+            Banking.addMoneyToFreeParking(currentPlayer, 15);
+
+        } else if (currentPosition == 23) {
+            //go to Hove station
+        } else if (currentPosition == 26) {
+            // go to Go
+        } else if ((currentPosition == 27) || (currentPosition == 25)) {
+            //housing
+
+        } else if (currentPosition == 28) {
+            //go back 3 spaces
+        } else if (currentPosition == 29) {
+            //go o SkyWalker Drive.
+        } else if (currentPosition == 30) {
+            //go to jail
+        } else if (currentPosition == 31) {
+            //put £20 on free parking
+
+            Banking.addMoneyToFreeParking(currentPlayer, 20);
+        } else if (currentPosition == 32) {
+            //get out of jail
+        }
+
+        } else if (action.StartsWith("Player pays")) {
+
+            int startIndex = action.IndexOf("£");
+            startIndex++;
+            int endIndex = actiion.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            Banking.playerToBankTransfer(currentPlayer, amount);
+
+        }
     }
     
     void setPotLuckCardText() {
@@ -146,6 +240,37 @@ public class PopUps : MonoBehaviour {
         potLuckCardNumber++;
         if (potLuckCardNumber == 17) {
             potLuckCardNumber = 0;
+        }
+
+        string action = cardData[potLuckCardNumber, 1];
+        currentPosition = EndOfTurnActions.getCurrentPosition();
+
+        if (action.StartsWith("Bank pays player")) {
+            int startIndex = action.IndexOf("£");
+            startIndex++;
+            int endIndex = actiion.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            Banking.bankToPlayerTransfer(currentPlayer, amount);
+
+        } else if (currentPosition == 3){
+            //move to old creek
+        } else if (currentPosition == 7) {
+            //move forwards to go
+        } else if (currentPosition == 10) {
+            // option to take opportunity knocks card or put £10 on free parking
+        } else if (currentPosition == 15) {
+            //receive 10 from each of the other players
+        } else if (currentPosition == 16) {
+            //get out of jail free
+
+        } else if (action.StartsWith("Player pays")) {
+
+            int startIndex = action.IndexOf("£");
+            startIndex++;
+            int endIndex = actiion.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            Banking.playerToBankTransfer(currentPlayer, amount);
+
         }
 
     }

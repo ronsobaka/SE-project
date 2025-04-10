@@ -28,6 +28,8 @@ public class EndOfTurnActions : MonoBehaviour {
             playerObjects[i] = player;
         }
 
+        PopUps pop = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PopUps>();
+
         string currentTileGroup = boardData[currentPosition, 2];
 
 
@@ -42,12 +44,19 @@ public class EndOfTurnActions : MonoBehaviour {
 
             } else {   //not owned so can buy so show user options
 
-                PopUps pop = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PopUps>();
                 pop.popUpCard(currentTileGroup);
             }
 
+        } else if ((currentPosition == 4) || (currentPosition == 5)) {
             
-            
+            pop.popUpCard("tax");
+
+            if (currentPosition == 4) {
+                Banking.addMoneyToFreeParking(currentPlayer, 200);
+            } else {
+                Banking.addMoneyToFreeParking(currentPlayer, 100);
+            }
+
         } else {
             GameController.turnComplete = true; //Temporary needs changeing for other tiles
         }
