@@ -48,7 +48,7 @@ public class PopUps : MonoBehaviour {
 
     public void popUpCard(string propertyType) {
 
-        currentPlayer = GameController.getCurrentPlayer
+        currentPlayer = GameController.getCurrentPlayer();
         if (propertyType == "Pot Luck"){
 
             potLuckPopUpBox.SetActive(true);
@@ -62,7 +62,6 @@ public class PopUps : MonoBehaviour {
             opportunityAnimator.SetTrigger("pop");
             setOpportunityCardText();
             StartCoroutine(opportunityCardTimeout());
-            Banking.opportunityCardActions(currentPlayer, opportunityCardNumber);
 
         } else if (propertyType == "tax") {
 
@@ -183,11 +182,14 @@ public class PopUps : MonoBehaviour {
             opportunityCardNumber = 17;
         }
 
+        string action = cardData[potLuckCardNumber, 1];
+        currentPosition = EndOfTurnActions.getCurrentPosition();
+
         if (action.StartsWith("Bank pays player")) {
             int startIndex = action.IndexOf("£");
             startIndex++;
-            int endIndex = actiion.IndexOf(" ", startIndex);
-            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            int endIndex = action.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.bankToPlayerTransfer(currentPlayer, amount);
 
         } else if (currentPosition == 19) {
@@ -218,14 +220,13 @@ public class PopUps : MonoBehaviour {
             Banking.addMoneyToFreeParking(currentPlayer, 20);
         } else if (currentPosition == 32) {
             //get out of jail
-        }
 
         } else if (action.StartsWith("Player pays")) {
 
             int startIndex = action.IndexOf("£");
             startIndex++;
-            int endIndex = actiion.IndexOf(" ", startIndex);
-            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            int endIndex = action.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.playerToBankTransfer(currentPlayer, amount);
 
         }
@@ -248,8 +249,8 @@ public class PopUps : MonoBehaviour {
         if (action.StartsWith("Bank pays player")) {
             int startIndex = action.IndexOf("£");
             startIndex++;
-            int endIndex = actiion.IndexOf(" ", startIndex);
-            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            int endIndex = action.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.bankToPlayerTransfer(currentPlayer, amount);
 
         } else if (currentPosition == 3){
@@ -267,8 +268,8 @@ public class PopUps : MonoBehaviour {
 
             int startIndex = action.IndexOf("£");
             startIndex++;
-            int endIndex = actiion.IndexOf(" ", startIndex);
-            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex))
+            int endIndex = action.IndexOf(" ", startIndex);
+            int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.playerToBankTransfer(currentPlayer, amount);
 
         }

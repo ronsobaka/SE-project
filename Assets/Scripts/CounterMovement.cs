@@ -108,7 +108,7 @@ public class CounterMovement : MonoBehaviour
 		if (moves == 0) {
 			Banking.bankToPlayerTransfer(GameController.currentPlayer, 200);
 		} else if (moves == 20) {
-			Banking.takeFreeParking(EndOfTurnActions.getCurrentPlayer);
+			Banking.takeFreeParking(GameController.getCurrentPlayer());
 		}
 
 		if (moves >= 0 && moves <= 8) {
