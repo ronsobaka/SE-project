@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "SE-project.sln"
+    "dotnet.defaultSolution": "SE-project2.sln"
 }

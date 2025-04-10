@@ -76,4 +76,8 @@ public class Banking : MonoBehaviour {
             }
         }
     }
+
+    public static bool checkBalance(int player, int amount) {
+        return (playerBalances[player] >= amount);
+    }
 }

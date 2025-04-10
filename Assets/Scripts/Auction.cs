@@ -11,6 +11,7 @@ public class Auction : MonoBehaviour {
     public Button pound1;
     public Button pound10;
     public Button pound100;
+    public Button dropOut;
     private static int highestBid;
     private static int highestBidder;
     public static int numberofPlayers;
@@ -20,6 +21,7 @@ public class Auction : MonoBehaviour {
     private static TextMeshProUGUI bidAndBidderText;
     public TextMeshProUGUI surroundingText;
     public TextMeshProUGUI title;
+    public TextMeshProUGUI errorText;
 
     
     public void startAuction() {
@@ -56,8 +58,19 @@ public class Auction : MonoBehaviour {
     }
 
     public void makeBid(int bidAmount) {
-        highestBid += bidAmount;
-        getNextBidder();
+
+        if (Banking.checkBalance(currentBidder, (highestBid + bidAmount))) {
+            highestBid += bidAmount;
+            getNextBidder();
+        } else {
+            errorText.text = "You cannot afford this bid.";
+            removeBidder();
+        }
+    }
+
+    IEnumerator errorMessageBuffer() {
+        yield return new WaitForSeconds(2f);
+        errorText.text = "";
     }
 
     public void removeBidder() {
@@ -100,6 +113,7 @@ public class Auction : MonoBehaviour {
 
         if (biddersRemaining.Count == 1) {
             GameObject.FindObjectOfType<Auction>().endBidding();
+
             return;
         }
 
@@ -110,7 +124,7 @@ public class Auction : MonoBehaviour {
     }
 
     private void endBidding(){
-        Debug.Log("Got here with no errors");
+
         setButtonActivation(false);
 
         EndOfTurnActions.auctionBuyProperty(biddersRemaining[0] - 1);
@@ -125,11 +139,12 @@ public class Auction : MonoBehaviour {
         pound1.enabled = trueFalse;
         pound10.enabled = trueFalse;
         pound100.enabled = trueFalse;
+        dropOut.enabled = trueFalse;
     }
 
     IEnumerator auctionTimeout() {
 
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(2.5f);
 		auctionAnimator.SetTrigger("close");
         GameController.setTurnComplete(true);
 	}
