@@ -21,8 +21,10 @@ public class PopUps : MonoBehaviour {
     private int potLuckCardNumber;
     private int currentPlayer;
     private int currentPosition;
+    public CounterMovement counterMovement;
 
     public void Start() {
+        counterMovement = GetComponent<CounterMovement>();
         potLuckCardNumber = 0;
         opportunityCardNumber = 17;
         
@@ -192,26 +194,51 @@ public class PopUps : MonoBehaviour {
             int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.bankToPlayerTransfer(currentPlayer, amount);
 
-        } else if (currentPosition == 19) {
-            //go to turing heights
-        } else if (currentPosition == 20) {
+        } else if (opportunityCardNumber == 19) {
+            //go to turing heights current player should go all the way to moves = 40
+            int movesToTuringHeights = 40 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToTuringHeights < 0) movesToTuringHeights += 40;
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToTuringHeights));
+
+        } else if (opportunityCardNumber == 20) {
             //go to Xin Gardens
-        } else if (currentPosition == 21) {
+            int movesToXinGardens = 25 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToXinGardens < 0) movesToXinGardens += 25;
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToXinGardens));
+
+        } else if (opportunityCardNumber == 21) {
             //put £15 on free parking
 
             Banking.addMoneyToFreeParking(currentPlayer, 15);
 
-        } else if (currentPosition == 23) {
+        } else if (opportunityCardNumber == 23) {
             //go to Hove station
+            
+            int movesToHoveStation = 25 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToHoveStation < 0) movesToHoveStation += 25;
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToHoveStation));
+
+
         } else if (currentPosition == 26) {
             // go to Go
+
         } else if ((currentPosition == 27) || (currentPosition == 25)) {
             //housing
 
         } else if (currentPosition == 28) {
             //go back 3 spaces
-        } else if (currentPosition == 29) {
-            //go o SkyWalker Drive.
+        } else if (opportunityCardNumber == 29) {
+            //go to SkyWalker Drive.
+
+            int movesToSkyWalkerDrive = 25 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToSkyWalkerDrive < 0) movesToSkyWalkerDrive += 25;
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToSkyWalkerDrive));
+
+            
         } else if (currentPosition == 30) {
             //go to jail
         } else if (currentPosition == 31) {

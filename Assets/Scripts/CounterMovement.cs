@@ -32,7 +32,7 @@ public class CounterMovement : MonoBehaviour
 
 	
 
-	IEnumerator MoveCounterCoroutine(int movesToMake) {
+	public IEnumerator MoveCounterCoroutine(int movesToMake) {
 		
 
     	for (int i = 0; i < movesToMake; i++) {
@@ -103,7 +103,7 @@ public class CounterMovement : MonoBehaviour
 		}
 	}
 
-	void UpdateMoveDistance() {
+	public void UpdateMoveDistance() {
 
 		if (moves == 0) {
 			Banking.bankToPlayerTransfer(GameController.currentPlayer, 200);
