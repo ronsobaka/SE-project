@@ -20,7 +20,8 @@ public class EndOfTurnActions : MonoBehaviour {
         playerPositions = GameController.playerPositions;
         currentPlayer = GameController.currentPlayer;
         currentPosition = playerPositions[currentPlayer];
-        boardData = GameController.getBoardData();
+        boardData = GameController.boardData;
+
         playerObjects = new GameObject[GameController.humanPlayers + 1];
         
         for (int i = 0; i < playerObjects.Length - 1; i++) {
@@ -37,17 +38,29 @@ public class EndOfTurnActions : MonoBehaviour {
 
             if (boardData[currentPosition, 13] != null) {   //Check if property is already owned
                 
-                int tileOwner = int.Parse(boardData[currentPosition, 13]);
-                int rentAmount = int.Parse(boardData[currentPosition, 6]);
-                Banking.playerToPlayerTransfer(currentPlayer, tileOwner, rentAmount);
+                if ((currentPosition == 5) || (currentPosition == 15) || (currentPosition == 25) || (currentPosition == 35)){
+                    
+                    //Add station rents here (below is temporary)
+
+                    int tileOwner = int.Parse(boardData[currentPosition, 13]);
+                    Banking.playerToPlayerTransfer(currentPlayer, tileOwner, 50);
+                    
+                } else {
+                    int tileOwner = int.Parse(boardData[currentPosition, 13]);
+                    int rentAmount = int.Parse(boardData[currentPosition, 6]);
+                    Banking.playerToPlayerTransfer(currentPlayer, tileOwner, rentAmount);
+                    
+                }
+
                 GameController.setTurnComplete(true);
+                
 
             } else {   //not owned so can buy so show user options
 
                 pop.popUpCard(currentTileGroup);
             }
 
-        } else if ((currentPosition == 4) || (currentPosition == 5)) {
+        } else if ((currentPosition == 4) || (currentPosition == 38)) {
             
             pop.popUpCard("tax");
 

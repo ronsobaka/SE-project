@@ -11,11 +11,13 @@ public class CounterMovement : MonoBehaviour
 	private Vector3 moveDistance;
 	private int moves;
 	public static bool moveCounterTrigger = false;
+	private bool firstGo;
 	
 	private int NumberDoublesRolled;
 	
 	void Start() {
 		GameController.playerPositions = new int[6];
+		firstGo = true;
 	}
 	
 	// Update is called once per frame
@@ -33,21 +35,29 @@ public class CounterMovement : MonoBehaviour
 	
 
 	public IEnumerator MoveCounterCoroutine(int movesToMake) {
-		
+
+		bool forwards = !(movesToMake < 0);
 
     	for (int i = 0; i < movesToMake; i++) {
 
         	UpdateMoveDistance();
             endPosition += moveDistance;
 
-			moves++;
+			if (forwards) {
+				moves++;
+			} else {
+				moves--;
+			}
+			
 			
 			
 
             // Rotate the counter every 10 moves
-            if ((moves % 10) == 0) {
+            if ((forwards) && (moves % 10) == 0) {
                 counterRB.transform.Rotate(Vector3.up * 90);
-            }
+            } else {
+				counterRB.transform.Rotate(Vector3.up * 270);
+			}
 
             // Move the counter to the new position
             while (counterRB.transform.position != endPosition) {
@@ -62,7 +72,9 @@ public class CounterMovement : MonoBehaviour
 
 				StartCoroutine(sendPlayerToJail());
 				
-			} else if (moves == 40) {
+			} else if ((moves == 40) && (forwards)) {
+				moves = 0;
+			} else if ((moves == 0) && (!forwards)) {
 				moves = 0;
 			}
 			
@@ -85,6 +97,7 @@ public class CounterMovement : MonoBehaviour
 
 		if (GameController.currentPlayer == (GameController.humanPlayers)){
 			GameController.currentPlayer = 0;
+			firstGo = false;
 		}
 		
 	}
@@ -105,7 +118,7 @@ public class CounterMovement : MonoBehaviour
 
 	public void UpdateMoveDistance() {
 
-		if (moves == 0) {
+		if ((moves == 0) && (!firstGo)) {
 			Banking.bankToPlayerTransfer(GameController.currentPlayer, 200);
 		} else if (moves == 20) {
 			Banking.takeFreeParking(GameController.getCurrentPlayer());

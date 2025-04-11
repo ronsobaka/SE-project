@@ -26,7 +26,7 @@ public class PopUps : MonoBehaviour {
     public void Start() {
         counterMovement = GetComponent<CounterMovement>();
         potLuckCardNumber = 0;
-        opportunityCardNumber = 17;
+        opportunityCardNumber = 23;
         
         cardDictionary = new Dictionary<string, Sprite> {
             { "Brown", cardSprites[0] },
@@ -49,6 +49,9 @@ public class PopUps : MonoBehaviour {
 
 
     public void popUpCard(string propertyType) {
+
+        buyButton.gameObject.SetActive(true);
+        auctionButton.gameObject.SetActive(true);
 
         currentPlayer = GameController.getCurrentPlayer();
         if (propertyType == "Pot Luck"){
@@ -179,22 +182,25 @@ public class PopUps : MonoBehaviour {
 
         OpportunityText.text = cardData[opportunityCardNumber, 0];
 
-        opportunityCardNumber++;
-        if (opportunityCardNumber == 33) {
-            opportunityCardNumber = 17;
-        }
+        
 
-        string action = cardData[potLuckCardNumber, 1];
+        Debug.Log(opportunityCardNumber);
+
+        string action = cardData[opportunityCardNumber, 1];
         currentPosition = EndOfTurnActions.getCurrentPosition();
 
-        if (action.StartsWith("Bank pays player")) {
+        if (action.StartsWith("Bank pays")) {
+
             int startIndex = action.IndexOf("£");
             startIndex++;
             int endIndex = action.IndexOf(" ", startIndex);
             int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
+
+            Debug.Log(amount);
             Banking.bankToPlayerTransfer(currentPlayer, amount);
 
         } else if (opportunityCardNumber == 19) {
+            Debug.Log("go");
             //go to turing heights current player should go all the way to moves = 40
             int movesToTuringHeights = 40 - GameController.playerPositions[GameController.currentPlayer];
             if (movesToTuringHeights < 0) movesToTuringHeights += 40;
@@ -203,8 +209,8 @@ public class PopUps : MonoBehaviour {
 
         } else if (opportunityCardNumber == 20) {
             //go to Xin Gardens
-            int movesToXinGardens = 25 - GameController.playerPositions[GameController.currentPlayer];
-            if (movesToXinGardens < 0) movesToXinGardens += 25;
+            int movesToXinGardens = 24 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToXinGardens < 0) movesToXinGardens += 24;
 
             StartCoroutine(counterMovement.MoveCounterCoroutine(movesToXinGardens));
 
@@ -216,20 +222,33 @@ public class PopUps : MonoBehaviour {
         } else if (opportunityCardNumber == 23) {
             //go to Hove station
             
-            int movesToHoveStation = 25 - GameController.playerPositions[GameController.currentPlayer];
-            if (movesToHoveStation < 0) movesToHoveStation += 25;
+            int movesToHoveStation = 15 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToHoveStation < 0) movesToHoveStation += 15;
 
             StartCoroutine(counterMovement.MoveCounterCoroutine(movesToHoveStation));
 
 
-        } else if (currentPosition == 26) {
+        } else if (opportunityCardNumber == 26) {
             // go to Go
 
-        } else if ((currentPosition == 27) || (currentPosition == 25)) {
+            int movesToGo = 40 - GameController.playerPositions[GameController.currentPlayer];
+
+            if (movesToGo < 0) {
+                movesToGo += 40;
+            }
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToGo));
+
+        } else if ((opportunityCardNumber == 27) || (opportunityCardNumber == 25)) {
             //housing
 
-        } else if (currentPosition == 28) {
+            Debug.Log("housing");
+
+        } else if (opportunityCardNumber == 28) {
             //go back 3 spaces
+
+            //StartCoroutine(counterMovement.MoveCounterCoroutine(-3));
+
         } else if (opportunityCardNumber == 29) {
             //go to SkyWalker Drive.
 
@@ -239,16 +258,24 @@ public class PopUps : MonoBehaviour {
             StartCoroutine(counterMovement.MoveCounterCoroutine(movesToSkyWalkerDrive));
 
             
-        } else if (currentPosition == 30) {
+        } else if (opportunityCardNumber == 30) {
             //go to jail
-        } else if (currentPosition == 31) {
+
+            int movesToJail = 20 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToJail < 0) movesToJail += 20;
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToJail));
+
+        } else if (opportunityCardNumber == 31) {
             //put £20 on free parking
 
             Banking.addMoneyToFreeParking(currentPlayer, 20);
-        } else if (currentPosition == 32) {
+        } else if (opportunityCardNumber == 32) {
             //get out of jail
 
         } else if (action.StartsWith("Player pays")) {
+
+            Debug.Log("Player pays");
 
             int startIndex = action.IndexOf("£");
             startIndex++;
@@ -256,6 +283,11 @@ public class PopUps : MonoBehaviour {
             int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.playerToBankTransfer(currentPlayer, amount);
 
+        }
+
+        opportunityCardNumber++;
+        if (opportunityCardNumber == 33) {
+            opportunityCardNumber = 17;
         }
     }
     
@@ -265,10 +297,7 @@ public class PopUps : MonoBehaviour {
         TextMeshProUGUI PotLuckText = GameObject.FindGameObjectWithTag("PotLuckText").GetComponent<TextMeshProUGUI>();
         PotLuckText.text = cardData[potLuckCardNumber, 0];
 
-        potLuckCardNumber++;
-        if (potLuckCardNumber == 17) {
-            potLuckCardNumber = 0;
-        }
+        
 
         string action = cardData[potLuckCardNumber, 1];
         currentPosition = EndOfTurnActions.getCurrentPosition();
@@ -280,15 +309,33 @@ public class PopUps : MonoBehaviour {
             int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.bankToPlayerTransfer(currentPlayer, amount);
 
-        } else if (currentPosition == 3){
+        } else if (potLuckCardNumber == 3){
             //move to old creek
-        } else if (currentPosition == 7) {
+
+            int movesToOldCreek = 41 - GameController.playerPositions[GameController.currentPlayer];
+            if (movesToOldCreek < 0) movesToOldCreek += 41;
+
+            StartCoroutine(counterMovement.MoveCounterCoroutine(movesToOldCreek));
+        } else if (potLuckCardNumber == 7) {
             //move forwards to go
-        } else if (currentPosition == 10) {
+
+            int movesToGo = 40 - GameController.playerPositions[GameController.currentPlayer];
+
+            if (movesToGo < 0) {
+                movesToGo += 40;
+            }
+        } else if (potLuckCardNumber == 10) {
             // option to take opportunity knocks card or put £10 on free parking
-        } else if (currentPosition == 15) {
+        } else if (potLuckCardNumber == 15) {
             //receive 10 from each of the other players
-        } else if (currentPosition == 16) {
+
+            for (int i = 0; i < GameController.humanPlayers - 1; i++) {
+                if (i != currentPlayer) {
+                    Banking.playerToPlayerTransfer(i, currentPlayer, 10);
+                }
+            }
+
+        } else if (potLuckCardNumber == 16) {
             //get out of jail free
 
         } else if (action.StartsWith("Player pays")) {
@@ -299,6 +346,11 @@ public class PopUps : MonoBehaviour {
             int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
             Banking.playerToBankTransfer(currentPlayer, amount);
 
+        }
+
+        potLuckCardNumber++;
+        if (potLuckCardNumber == 17) {
+            potLuckCardNumber = 0;
         }
 
     }

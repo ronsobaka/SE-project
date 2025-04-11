@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour
     
     void Start() {
         setStartPostitions();
-        shuffleCards();
         
        
         playersInJail = new bool[6];
@@ -39,39 +38,6 @@ public class GameController : MonoBehaviour
         Banking.setUpBank();
     }
 
-    void shuffleCards() {
-
-        System.Random rng = new System.Random();
-        
-        // Iterate through the cardData in reverse order
-        for (int i = 17; i > 0; i--)
-        {
-            // Random index to swap with
-            int j = rng.Next(0, i + 1);
-
-            string temp = cardData[i,0];
-            string temp2 = cardData[i,1];
-            cardData[i,0] = cardData[j,0];
-            cardData[i,1] = cardData[j,1];
-            cardData[j,0] = temp;
-            cardData[j,1] = temp2;
-        }
-
-
-        for (int i = cardData.GetLength(0) - 1; i > 17; i--)
-        {
-            // Random index to swap with
-            int j = rng.Next(0, i + 1);
-
-            string temp = cardData[i,0];
-            string temp2 = cardData[i,1];
-            cardData[i,0] = cardData[j,0];
-            cardData[i,1] = cardData[j,1];
-            cardData[j,0] = temp;
-            cardData[j,1] = temp2;
-        }
-    
-    }
     void Update() {
         if ((Input.GetKeyDown(KeyCode.Space)) && turnComplete) {	
 			CounterMovement.counterRB = playerCounters[currentPlayer].GetComponent<Rigidbody>();
