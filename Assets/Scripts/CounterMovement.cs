@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CounterMovement : MonoBehaviour
 {
-	private static float delay = 0.00001f;
+	private static float delay = 0.25f;
 	public static Rigidbody counterRB;
-	private float moveSpeed = 20f;
+	private float moveSpeed = 5;
 	private Vector3 endPosition;
 	private Vector3 moveDistance;
 	private int moves;

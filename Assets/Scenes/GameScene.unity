@@ -15982,7 +15982,7 @@ GameObject:
   - component: {fileID: 1150584537}
   - component: {fileID: 1150584538}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SkyBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27971,6 +27971,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cd7093ac0f427424580ce6a000fd1fe0, type: 3}
   - {fileID: 21300000, guid: 581c3ca61c9b794468a3ea5926156550, type: 3}
   - {fileID: 21300000, guid: b8b0e3b64314e504486941706aa4b887, type: 3}
+  counterMovement: {fileID: 0}
 --- !u!114 &2049480694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27983,9 +27984,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f45f063f68d8f4facd7c080521c15f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCounters: []
-  counterPrefab: {fileID: 4644076256380564492, guid: a8cc4c945ede5c84fb2fbd02122d41e6,
-    type: 3}
+  counterPrefabs:
+  - {fileID: 7164862257640640624, guid: e5cb7ff69b944de49b266fb64d929688, type: 3}
+  - {fileID: 5294302236008646314, guid: 384f7907cfd924d40a1918f5d52f3087, type: 3}
+  - {fileID: 6488595294944550825, guid: 28f3bc2c323457a409efcd807c2d66fd, type: 3}
+  - {fileID: 6754571243238440941, guid: 20b5904eaba570f4083f1baeb4cc237c, type: 3}
+  - {fileID: 973395900945008127, guid: 07dd852511f20084aa0f0d9d3cac4e51, type: 3}
+  - {fileID: 5062197656652517635, guid: bf0b13e00f684a04fb68f575b1e44679, type: 3}
+  playerCounters:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerUIImages:
   - {fileID: 26401699}
   - {fileID: 591813463}
@@ -28085,7 +28097,7 @@ MonoBehaviour:
   dropOut: {fileID: 1914430229}
   surroundingText: {fileID: 2069648979}
   title: {fileID: 1585611328}
-  errorText: {fileID: 0}
+  errorText: {fileID: 1395112508}
 --- !u!1 &2063172954
 GameObject:
   m_ObjectHideFlags: 0

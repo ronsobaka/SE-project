@@ -182,10 +182,6 @@ public class PopUps : MonoBehaviour {
 
         OpportunityText.text = cardData[opportunityCardNumber, 0];
 
-        
-
-        Debug.Log(opportunityCardNumber);
-
         string action = cardData[opportunityCardNumber, 1];
         currentPosition = EndOfTurnActions.getCurrentPosition();
 
@@ -196,11 +192,9 @@ public class PopUps : MonoBehaviour {
             int endIndex = action.IndexOf(" ", startIndex);
             int amount = int.Parse(action.Substring(startIndex, endIndex - startIndex));
 
-            Debug.Log(amount);
             Banking.bankToPlayerTransfer(currentPlayer, amount);
 
         } else if (opportunityCardNumber == 19) {
-            Debug.Log("go");
             //go to turing heights current player should go all the way to moves = 40
             int movesToTuringHeights = 40 - GameController.playerPositions[GameController.currentPlayer];
             if (movesToTuringHeights < 0) movesToTuringHeights += 40;
@@ -242,7 +236,6 @@ public class PopUps : MonoBehaviour {
         } else if ((opportunityCardNumber == 27) || (opportunityCardNumber == 25)) {
             //housing
 
-            Debug.Log("housing");
 
         } else if (opportunityCardNumber == 28) {
             //go back 3 spaces
@@ -275,7 +268,6 @@ public class PopUps : MonoBehaviour {
 
         } else if (action.StartsWith("Player pays")) {
 
-            Debug.Log("Player pays");
 
             int startIndex = action.IndexOf("£");
             startIndex++;
